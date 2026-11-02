@@ -1,0 +1,212 @@
+{
+  "model": "logistic_regression",
+  "run_id": "daf3b3a9-f0eb-4190-b811-7364bf8d80f7",
+  "dataset_sha256": "e47f9ee225e1ee6e69b7564e6dac7123e80b8486677fe111f351964cef5dec80",
+  "model_sha256": "6b88dc307966ab97b05ef89705862e2b184d6e805c13febf62417cd453265ce7",
+  "input_features": [
+    "school",
+    "sex",
+    "address",
+    "famsize",
+    "Pstatus",
+    "Mjob",
+    "Fjob",
+    "reason",
+    "guardian",
+    "schoolsup",
+    "famsup",
+    "paid",
+    "activities",
+    "nursery",
+    "higher",
+    "internet",
+    "romantic",
+    "age",
+    "Medu",
+    "Fedu",
+    "traveltime",
+    "studytime",
+    "failures",
+    "famrel",
+    "freetime",
+    "goout",
+    "Dalc",
+    "Walc",
+    "health",
+    "absences"
+  ],
+  "excluded_features": [
+    "G1",
+    "G2",
+    "G3"
+  ],
+  "threshold": 0.5,
+  "tuning": {
+    "best_params": {
+      "classifier__C": 1.0,
+      "classifier__class_weight": "balanced",
+      "classifier__penalty": "l2"
+    },
+    "best_index": 11,
+    "candidates": 16,
+    "cv_scores": {
+      "accuracy": {
+        "mean": 0.6328869047619048,
+        "std": 0.056364661557010885,
+        "folds": [
+          0.640625,
+          0.6507936507936508,
+          0.6666666666666666,
+          0.6825396825396826,
+          0.5238095238095238
+        ]
+      },
+      "precision": {
+        "mean": 0.45782488479262673,
+        "std": 0.05719022416186552,
+        "folds": [
+          0.45,
+          0.4642857142857143,
+          0.5,
+          0.52,
+          0.3548387096774194
+        ]
+      },
+      "recall": {
+        "mean": 0.53,
+        "std": 0.09267503510395493,
+        "folds": [
+          0.42857142857142855,
+          0.65,
+          0.42857142857142855,
+          0.6190476190476191,
+          0.5238095238095238
+        ]
+      },
+      "f1": {
+        "mean": 0.4861047665660602,
+        "std": 0.056812861867726855,
+        "folds": [
+          0.43902439024390244,
+          0.5416666666666666,
+          0.46153846153846156,
+          0.5652173913043478,
+          0.4230769230769231
+        ]
+      },
+      "f2": {
+        "mean": 0.510062354985394,
+        "std": 0.07431041590579238,
+        "folds": [
+          0.4326923076923077,
+          0.6018518518518519,
+          0.4411764705882353,
+          0.5963302752293578,
+          0.4782608695652174
+        ]
+      },
+      "roc_auc": {
+        "mean": 0.6325744871592047,
+        "std": 0.04728978031898277,
+        "folds": [
+          0.5813953488372093,
+          0.6755813953488372,
+          0.6337868480725624,
+          0.6938775510204082,
+          0.5782312925170068
+        ]
+      },
+      "average_precision": {
+        "mean": 0.4907512058396546,
+        "std": 0.08280400523169476,
+        "folds": [
+          0.45248200117783965,
+          0.4472606848260179,
+          0.5545643621259353,
+          0.6152524100535706,
+          0.3841965710149098
+        ]
+      }
+    }
+  },
+  "test_metrics": {
+    "accuracy": 0.6708860759493671,
+    "precision": 0.5,
+    "recall": 0.6923076923076923,
+    "f1": 0.5806451612903226,
+    "f2": 0.6428571428571429,
+    "roc_auc": 0.7438316400580551,
+    "average_precision": 0.5984863393269533,
+    "brier_score": 0.20724300777719915,
+    "specificity": 0.660377358490566,
+    "threshold": 0.5,
+    "confusion_matrix": [
+      [
+        35,
+        18
+      ],
+      [
+        8,
+        18
+      ]
+    ],
+    "confusion_matrix_order": [
+      "Not At Risk",
+      "At Risk"
+    ],
+    "at_risk": {
+      "precision": 0.5,
+      "recall": 0.6923076923076923,
+      "f1-score": 0.5806451612903226,
+      "support": 26,
+      "true_positives": 18,
+      "false_negatives": 8,
+      "recall_95pct_wilson_interval": [
+        0.5001174167780164,
+        0.8349868440453624
+      ]
+    },
+    "classification_report": {
+      "Not At Risk": {
+        "precision": 0.813953488372093,
+        "recall": 0.660377358490566,
+        "f1-score": 0.7291666666666666,
+        "support": 53.0
+      },
+      "At Risk": {
+        "precision": 0.5,
+        "recall": 0.6923076923076923,
+        "f1-score": 0.5806451612903226,
+        "support": 26.0
+      },
+      "accuracy": 0.6708860759493671,
+      "macro avg": {
+        "precision": 0.6569767441860466,
+        "recall": 0.6763425253991291,
+        "f1-score": 0.6549059139784946,
+        "support": 79.0
+      },
+      "weighted avg": {
+        "precision": 0.7106270238445687,
+        "recall": 0.6708860759493671,
+        "f1-score": 0.6802861712263508,
+        "support": 79.0
+      }
+    }
+  },
+  "fit_partition": "training only",
+  "environment": {
+    "python": "3.12.14",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "packages": {
+      "numpy": "2.2.6",
+      "pandas": "2.3.3",
+      "scipy": "1.16.2",
+      "scikit-learn": "1.7.2",
+      "matplotlib": "3.10.7",
+      "joblib": "1.5.2",
+      "streamlit": "1.50.0",
+      "pytest": "8.4.2"
+    }
+  }
+}

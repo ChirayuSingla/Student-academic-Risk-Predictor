@@ -1,0 +1,616 @@
+{
+  "python": "3.12.10",
+  "executable": "C:\\Users\\chirayu singla\\OneDrive\\Desktop\\chiku\\.venv\\Scripts\\python.exe",
+  "base_executable": "C:\\Users\\chirayu singla\\OneDrive\\Desktop\\chiku\\.runtime\\python31210\\tools\\python.exe",
+  "architecture_bits": 64,
+  "platform": "Windows-11-10.0.26200-SP0",
+  "project_root": "C:\\Users\\chirayu singla\\OneDrive\\Desktop\\chiku",
+  "checks": {
+    "python_312_x64": true,
+    "isolated_virtual_environment": true,
+    "no_python_path_overrides": true,
+    "no_local_package_shadowing": true,
+    "pin:altair": true,
+    "python_requirement:altair": true,
+    "wheel:altair": true,
+    "pin:attrs": true,
+    "python_requirement:attrs": true,
+    "wheel:attrs": true,
+    "pin:blinker": true,
+    "python_requirement:blinker": true,
+    "wheel:blinker": true,
+    "pin:cachetools": true,
+    "python_requirement:cachetools": true,
+    "wheel:cachetools": true,
+    "pin:certifi": true,
+    "python_requirement:certifi": true,
+    "wheel:certifi": true,
+    "pin:charset-normalizer": true,
+    "python_requirement:charset-normalizer": true,
+    "wheel:charset-normalizer": true,
+    "pin:click": true,
+    "python_requirement:click": true,
+    "wheel:click": true,
+    "pin:colorama": true,
+    "python_requirement:colorama": true,
+    "wheel:colorama": true,
+    "pin:contourpy": true,
+    "python_requirement:contourpy": true,
+    "wheel:contourpy": true,
+    "pin:cycler": true,
+    "python_requirement:cycler": true,
+    "wheel:cycler": true,
+    "pin:fonttools": true,
+    "python_requirement:fonttools": true,
+    "wheel:fonttools": true,
+    "pin:gitdb": true,
+    "python_requirement:gitdb": true,
+    "wheel:gitdb": true,
+    "pin:GitPython": true,
+    "python_requirement:GitPython": true,
+    "wheel:GitPython": true,
+    "pin:idna": true,
+    "python_requirement:idna": true,
+    "wheel:idna": true,
+    "pin:iniconfig": true,
+    "python_requirement:iniconfig": true,
+    "wheel:iniconfig": true,
+    "pin:Jinja2": true,
+    "python_requirement:Jinja2": true,
+    "wheel:Jinja2": true,
+    "pin:joblib": true,
+    "python_requirement:joblib": true,
+    "wheel:joblib": true,
+    "pin:jsonschema": true,
+    "python_requirement:jsonschema": true,
+    "wheel:jsonschema": true,
+    "pin:jsonschema-specifications": true,
+    "python_requirement:jsonschema-specifications": true,
+    "wheel:jsonschema-specifications": true,
+    "pin:kiwisolver": true,
+    "python_requirement:kiwisolver": true,
+    "wheel:kiwisolver": true,
+    "pin:MarkupSafe": true,
+    "python_requirement:MarkupSafe": true,
+    "wheel:MarkupSafe": true,
+    "pin:matplotlib": true,
+    "python_requirement:matplotlib": true,
+    "wheel:matplotlib": true,
+    "pin:narwhals": true,
+    "python_requirement:narwhals": true,
+    "wheel:narwhals": true,
+    "pin:numpy": true,
+    "python_requirement:numpy": true,
+    "wheel:numpy": true,
+    "pin:packaging": true,
+    "python_requirement:packaging": true,
+    "wheel:packaging": true,
+    "pin:pandas": true,
+    "python_requirement:pandas": true,
+    "wheel:pandas": true,
+    "pin:pillow": true,
+    "python_requirement:pillow": true,
+    "wheel:pillow": true,
+    "pin:pluggy": true,
+    "python_requirement:pluggy": true,
+    "wheel:pluggy": true,
+    "pin:protobuf": true,
+    "python_requirement:protobuf": true,
+    "wheel:protobuf": true,
+    "pin:pyarrow": true,
+    "python_requirement:pyarrow": true,
+    "wheel:pyarrow": true,
+    "pin:pydeck": true,
+    "python_requirement:pydeck": true,
+    "wheel:pydeck": true,
+    "pin:Pygments": true,
+    "python_requirement:Pygments": true,
+    "wheel:Pygments": true,
+    "pin:pyparsing": true,
+    "python_requirement:pyparsing": true,
+    "wheel:pyparsing": true,
+    "pin:pytest": true,
+    "python_requirement:pytest": true,
+    "wheel:pytest": true,
+    "pin:python-dateutil": true,
+    "python_requirement:python-dateutil": true,
+    "wheel:python-dateutil": true,
+    "pin:pytz": true,
+    "python_requirement:pytz": true,
+    "wheel:pytz": true,
+    "pin:referencing": true,
+    "python_requirement:referencing": true,
+    "wheel:referencing": true,
+    "pin:requests": true,
+    "python_requirement:requests": true,
+    "wheel:requests": true,
+    "pin:rpds-py": true,
+    "python_requirement:rpds-py": true,
+    "wheel:rpds-py": true,
+    "pin:scikit-learn": true,
+    "python_requirement:scikit-learn": true,
+    "wheel:scikit-learn": true,
+    "pin:scipy": true,
+    "python_requirement:scipy": true,
+    "wheel:scipy": true,
+    "pin:six": true,
+    "python_requirement:six": true,
+    "wheel:six": true,
+    "pin:smmap": true,
+    "python_requirement:smmap": true,
+    "wheel:smmap": true,
+    "pin:streamlit": true,
+    "python_requirement:streamlit": true,
+    "wheel:streamlit": true,
+    "pin:tenacity": true,
+    "python_requirement:tenacity": true,
+    "wheel:tenacity": true,
+    "pin:threadpoolctl": true,
+    "python_requirement:threadpoolctl": true,
+    "wheel:threadpoolctl": true,
+    "pin:toml": true,
+    "python_requirement:toml": true,
+    "wheel:toml": true,
+    "pin:tornado": true,
+    "python_requirement:tornado": true,
+    "wheel:tornado": true,
+    "pin:typing_extensions": true,
+    "python_requirement:typing_extensions": true,
+    "wheel:typing_extensions": true,
+    "pin:tzdata": true,
+    "python_requirement:tzdata": true,
+    "wheel:tzdata": true,
+    "pin:urllib3": true,
+    "python_requirement:urllib3": true,
+    "wheel:urllib3": true,
+    "pin:watchdog": true,
+    "python_requirement:watchdog": true,
+    "wheel:watchdog": true,
+    "import:numpy": true,
+    "import:pandas": true,
+    "import:scipy": true,
+    "import:scikit-learn": true,
+    "import:matplotlib": true,
+    "import:joblib": true,
+    "import:streamlit": true,
+    "import:pytest": true,
+    "import:pillow": true,
+    "saved_models_predict": true
+  },
+  "packages": {
+    "altair": {
+      "expected": "5.5.0",
+      "installed": "5.5.0",
+      "requires_python": ">=3.9",
+      "wheel_tags": [
+        "py3-none-any"
+      ]
+    },
+    "attrs": {
+      "expected": "26.1.0",
+      "installed": "26.1.0",
+      "requires_python": ">=3.9",
+      "wheel_tags": [
+        "py3-none-any"
+      ]
+    },
+    "blinker": {
+      "expected": "1.9.0",
+      "installed": "1.9.0",
+      "requires_python": ">=3.9",
+      "wheel_tags": [
+        "py3-none-any"
+      ]
+    },
+    "cachetools": {
+      "expected": "6.2.6",
+      "installed": "6.2.6",
+      "requires_python": ">=3.9",
+      "wheel_tags": [
+        "py3-none-any"
+      ]
+    },
+    "certifi": {
+      "expected": "2026.7.22",
+      "installed": "2026.7.22",
+      "requires_python": ">=3.7",
+      "wheel_tags": [
+        "py3-none-any"
+      ]
+    },
+    "charset-normalizer": {
+      "expected": "3.5.2",
+      "installed": "3.5.2",
+      "requires_python": ">=3.7",
+      "wheel_tags": [
+        "cp312-cp312-win_amd64"
+      ]
+    },
+    "click": {
+      "expected": "8.5.0",
+      "installed": "8.5.0",
+      "requires_python": ">=3.10",
+      "wheel_tags": [
+        "py3-none-any"
+      ]
+    },
+    "colorama": {
+      "expected": "0.4.6",
+      "installed": "0.4.6",
+      "requires_python": "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,!=3.5.*,!=3.6.*,>=2.7",
+      "wheel_tags": [
+        "py2-none-any",
+        "py3-none-any"
+      ]
+    },
+    "contourpy": {
+      "expected": "1.4.0",
+      "installed": "1.4.0",
+      "requires_python": ">=3.12",
+      "wheel_tags": [
+        "cp312-cp312-win_amd64"
+      ]
+    },
+    "cycler": {
+      "expected": "0.12.1",
+      "installed": "0.12.1",
+      "requires_python": ">=3.8",
+      "wheel_tags": [
+        "py3-none-any"
+      ]
+    },
+    "fonttools": {
+      "expected": "4.66.1",
+      "installed": "4.66.1",
+      "requires_python": ">=3.11",
+      "wheel_tags": [
+        "cp312-cp312-win_amd64"
+      ]
+    },
+    "gitdb": {
+      "expected": "4.0.12",
+      "installed": "4.0.12",
+      "requires_python": ">=3.7",
+      "wheel_tags": [
+        "py3-none-any"
+      ]
+    },
+    "GitPython": {
+      "expected": "3.2.0",
+      "installed": "3.2.0",
+      "requires_python": ">=3.8",
+      "wheel_tags": [
+        "py3-none-any"
+      ]
+    },
+    "idna": {
+      "expected": "3.20",
+      "installed": "3.20",
+      "requires_python": ">=3.9",
+      "wheel_tags": [
+        "py3-none-any"
+      ]
+    },
+    "iniconfig": {
+      "expected": "2.3.1",
+      "installed": "2.3.1",
+      "requires_python": ">=3.10",
+      "wheel_tags": [
+        "py3-none-any"
+      ]
+    },
+    "Jinja2": {
+      "expected": "3.1.6",
+      "installed": "3.1.6",
+      "requires_python": ">=3.7",
+      "wheel_tags": [
+        "py3-none-any"
+      ]
+    },
+    "joblib": {
+      "expected": "1.5.2",
+      "installed": "1.5.2",
+      "requires_python": ">=3.9",
+      "wheel_tags": [
+        "py3-none-any"
+      ],
+      "import_path": "C:\\Users\\chirayu singla\\OneDrive\\Desktop\\chiku\\.venv\\Lib\\site-packages\\joblib\\__init__.py"
+    },
+    "jsonschema": {
+      "expected": "4.26.0",
+      "installed": "4.26.0",
+      "requires_python": ">=3.10",
+      "wheel_tags": [
+        "py3-none-any"
+      ]
+    },
+    "jsonschema-specifications": {
+      "expected": "2025.9.1",
+      "installed": "2025.9.1",
+      "requires_python": ">=3.9",
+      "wheel_tags": [
+        "py3-none-any"
+      ]
+    },
+    "kiwisolver": {
+      "expected": "1.5.1",
+      "installed": "1.5.1",
+      "requires_python": ">=3.10",
+      "wheel_tags": [
+        "cp312-cp312-win_amd64"
+      ]
+    },
+    "MarkupSafe": {
+      "expected": "3.0.4",
+      "installed": "3.0.4",
+      "requires_python": ">=3.9",
+      "wheel_tags": [
+        "cp312-cp312-win_amd64"
+      ]
+    },
+    "matplotlib": {
+      "expected": "3.10.7",
+      "installed": "3.10.7",
+      "requires_python": ">=3.10",
+      "wheel_tags": [
+        "cp312-cp312-win_amd64"
+      ],
+      "import_path": "C:\\Users\\chirayu singla\\OneDrive\\Desktop\\chiku\\.venv\\Lib\\site-packages\\matplotlib\\__init__.py"
+    },
+    "narwhals": {
+      "expected": "2.27.1",
+      "installed": "2.27.1",
+      "requires_python": ">=3.10",
+      "wheel_tags": [
+        "py3-none-any"
+      ]
+    },
+    "numpy": {
+      "expected": "2.2.6",
+      "installed": "2.2.6",
+      "requires_python": ">=3.10",
+      "wheel_tags": [
+        "cp312-cp312-win_amd64"
+      ],
+      "import_path": "C:\\Users\\chirayu singla\\OneDrive\\Desktop\\chiku\\.venv\\Lib\\site-packages\\numpy\\__init__.py"
+    },
+    "packaging": {
+      "expected": "25.0",
+      "installed": "25.0",
+      "requires_python": ">=3.8",
+      "wheel_tags": [
+        "py3-none-any"
+      ]
+    },
+    "pandas": {
+      "expected": "2.3.3",
+      "installed": "2.3.3",
+      "requires_python": ">=3.9",
+      "wheel_tags": [
+        "cp312-cp312-win_amd64"
+      ],
+      "import_path": "C:\\Users\\chirayu singla\\OneDrive\\Desktop\\chiku\\.venv\\Lib\\site-packages\\pandas\\__init__.py"
+    },
+    "pillow": {
+      "expected": "11.3.0",
+      "installed": "11.3.0",
+      "requires_python": ">=3.9",
+      "wheel_tags": [
+        "cp312-cp312-win_amd64"
+      ],
+      "import_path": "C:\\Users\\chirayu singla\\OneDrive\\Desktop\\chiku\\.venv\\Lib\\site-packages\\PIL\\__init__.py"
+    },
+    "pluggy": {
+      "expected": "1.6.0",
+      "installed": "1.6.0",
+      "requires_python": ">=3.9",
+      "wheel_tags": [
+        "py3-none-any"
+      ]
+    },
+    "protobuf": {
+      "expected": "6.33.6",
+      "installed": "6.33.6",
+      "requires_python": ">=3.9",
+      "wheel_tags": [
+        "cp310-abi3-win_amd64"
+      ]
+    },
+    "pyarrow": {
+      "expected": "26.0.0",
+      "installed": "26.0.0",
+      "requires_python": ">=3.11",
+      "wheel_tags": [
+        "cp312-cp312-win_amd64"
+      ]
+    },
+    "pydeck": {
+      "expected": "0.9.3",
+      "installed": "0.9.3",
+      "requires_python": ">=3.8",
+      "wheel_tags": [
+        "py2-none-any",
+        "py3-none-any"
+      ]
+    },
+    "Pygments": {
+      "expected": "2.21.0",
+      "installed": "2.21.0",
+      "requires_python": ">=3.9",
+      "wheel_tags": [
+        "py3-none-any"
+      ]
+    },
+    "pyparsing": {
+      "expected": "3.3.3",
+      "installed": "3.3.3",
+      "requires_python": ">=3.9",
+      "wheel_tags": [
+        "py3-none-any"
+      ]
+    },
+    "pytest": {
+      "expected": "8.4.2",
+      "installed": "8.4.2",
+      "requires_python": ">=3.9",
+      "wheel_tags": [
+        "py3-none-any"
+      ],
+      "import_path": "C:\\Users\\chirayu singla\\OneDrive\\Desktop\\chiku\\.venv\\Lib\\site-packages\\pytest\\__init__.py"
+    },
+    "python-dateutil": {
+      "expected": "2.9.0.post0",
+      "installed": "2.9.0.post0",
+      "requires_python": "!=3.0.*,!=3.1.*,!=3.2.*,>=2.7",
+      "wheel_tags": [
+        "py2-none-any",
+        "py3-none-any"
+      ]
+    },
+    "pytz": {
+      "expected": "2026.5",
+      "installed": "2026.5",
+      "requires_python": "",
+      "wheel_tags": [
+        "py2-none-any",
+        "py3-none-any"
+      ]
+    },
+    "referencing": {
+      "expected": "0.37.0",
+      "installed": "0.37.0",
+      "requires_python": ">=3.10",
+      "wheel_tags": [
+        "py3-none-any"
+      ]
+    },
+    "requests": {
+      "expected": "2.34.2",
+      "installed": "2.34.2",
+      "requires_python": ">=3.10",
+      "wheel_tags": [
+        "py3-none-any"
+      ]
+    },
+    "rpds-py": {
+      "expected": "2026.9.1",
+      "installed": "2026.9.1",
+      "requires_python": ">=3.11",
+      "wheel_tags": [
+        "cp312-cp312-win_amd64"
+      ]
+    },
+    "scikit-learn": {
+      "expected": "1.7.2",
+      "installed": "1.7.2",
+      "requires_python": ">=3.10",
+      "wheel_tags": [
+        "cp312-cp312-win_amd64"
+      ],
+      "import_path": "C:\\Users\\chirayu singla\\OneDrive\\Desktop\\chiku\\.venv\\Lib\\site-packages\\sklearn\\__init__.py"
+    },
+    "scipy": {
+      "expected": "1.16.2",
+      "installed": "1.16.2",
+      "requires_python": ">=3.11",
+      "wheel_tags": [
+        "cp312-cp312-win_amd64"
+      ],
+      "import_path": "C:\\Users\\chirayu singla\\OneDrive\\Desktop\\chiku\\.venv\\Lib\\site-packages\\scipy\\__init__.py"
+    },
+    "six": {
+      "expected": "1.17.0",
+      "installed": "1.17.0",
+      "requires_python": ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*",
+      "wheel_tags": [
+        "py2-none-any",
+        "py3-none-any"
+      ]
+    },
+    "smmap": {
+      "expected": "5.0.3",
+      "installed": "5.0.3",
+      "requires_python": ">=3.7",
+      "wheel_tags": [
+        "py3-none-any"
+      ]
+    },
+    "streamlit": {
+      "expected": "1.50.0",
+      "installed": "1.50.0",
+      "requires_python": ">=3.9, !=3.9.7",
+      "wheel_tags": [
+        "py3-none-any"
+      ],
+      "import_path": "C:\\Users\\chirayu singla\\OneDrive\\Desktop\\chiku\\.venv\\Lib\\site-packages\\streamlit\\__init__.py"
+    },
+    "tenacity": {
+      "expected": "9.2.1",
+      "installed": "9.2.1",
+      "requires_python": ">=3.10",
+      "wheel_tags": [
+        "py3-none-any"
+      ]
+    },
+    "threadpoolctl": {
+      "expected": "3.7.0",
+      "installed": "3.7.0",
+      "requires_python": ">=3.9",
+      "wheel_tags": [
+        "py3-none-any"
+      ]
+    },
+    "toml": {
+      "expected": "0.10.2",
+      "installed": "0.10.2",
+      "requires_python": ">=2.6, !=3.0.*, !=3.1.*, !=3.2.*",
+      "wheel_tags": [
+        "py2-none-any",
+        "py3-none-any"
+      ]
+    },
+    "tornado": {
+      "expected": "6.5.10",
+      "installed": "6.5.10",
+      "requires_python": ">= 3.9",
+      "wheel_tags": [
+        "cp39-abi3-win_amd64"
+      ]
+    },
+    "typing_extensions": {
+      "expected": "4.16.0",
+      "installed": "4.16.0",
+      "requires_python": ">=3.9",
+      "wheel_tags": [
+        "py3-none-any"
+      ]
+    },
+    "tzdata": {
+      "expected": "2026.5",
+      "installed": "2026.5",
+      "requires_python": ">=2",
+      "wheel_tags": [
+        "py2-none-any",
+        "py3-none-any"
+      ]
+    },
+    "urllib3": {
+      "expected": "2.8.0",
+      "installed": "2.8.0",
+      "requires_python": ">=3.10",
+      "wheel_tags": [
+        "py3-none-any"
+      ]
+    },
+    "watchdog": {
+      "expected": "6.0.0",
+      "installed": "6.0.0",
+      "requires_python": ">=3.9",
+      "wheel_tags": [
+        "py3-none-win_amd64"
+      ]
+    }
+  },
+  "errors": [],
+  "status": "passed"
+}

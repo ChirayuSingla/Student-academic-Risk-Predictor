@@ -1,0 +1,53 @@
+package,locked_version,installed_version,requires_python,wheel_tags,compatible_with_python312_x64
+GitPython,3.2.0,3.2.0,>=3.8,py3-none-any,True
+Jinja2,3.1.6,3.1.6,>=3.7,py3-none-any,True
+MarkupSafe,3.0.4,3.0.4,>=3.9,cp312-cp312-win_amd64,True
+Pygments,2.21.0,2.21.0,>=3.9,py3-none-any,True
+altair,5.5.0,5.5.0,>=3.9,py3-none-any,True
+attrs,26.1.0,26.1.0,>=3.9,py3-none-any,True
+blinker,1.9.0,1.9.0,>=3.9,py3-none-any,True
+cachetools,6.2.6,6.2.6,>=3.9,py3-none-any,True
+certifi,2026.7.22,2026.7.22,>=3.7,py3-none-any,True
+charset-normalizer,3.5.2,3.5.2,>=3.7,cp312-cp312-win_amd64,True
+click,8.5.0,8.5.0,>=3.10,py3-none-any,True
+colorama,0.4.6,0.4.6,"!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,!=3.5.*,!=3.6.*,>=2.7",py2-none-any; py3-none-any,True
+contourpy,1.4.0,1.4.0,>=3.12,cp312-cp312-win_amd64,True
+cycler,0.12.1,0.12.1,>=3.8,py3-none-any,True
+fonttools,4.66.1,4.66.1,>=3.11,cp312-cp312-win_amd64,True
+gitdb,4.0.12,4.0.12,>=3.7,py3-none-any,True
+idna,3.20,3.20,>=3.9,py3-none-any,True
+iniconfig,2.3.1,2.3.1,>=3.10,py3-none-any,True
+joblib,1.5.2,1.5.2,>=3.9,py3-none-any,True
+jsonschema,4.26.0,4.26.0,>=3.10,py3-none-any,True
+jsonschema-specifications,2025.9.1,2025.9.1,>=3.9,py3-none-any,True
+kiwisolver,1.5.1,1.5.1,>=3.10,cp312-cp312-win_amd64,True
+matplotlib,3.10.7,3.10.7,>=3.10,cp312-cp312-win_amd64,True
+narwhals,2.27.1,2.27.1,>=3.10,py3-none-any,True
+numpy,2.2.6,2.2.6,>=3.10,cp312-cp312-win_amd64,True
+packaging,25.0,25.0,>=3.8,py3-none-any,True
+pandas,2.3.3,2.3.3,>=3.9,cp312-cp312-win_amd64,True
+pillow,11.3.0,11.3.0,>=3.9,cp312-cp312-win_amd64,True
+pluggy,1.6.0,1.6.0,>=3.9,py3-none-any,True
+protobuf,6.33.6,6.33.6,>=3.9,cp310-abi3-win_amd64,True
+pyarrow,26.0.0,26.0.0,>=3.11,cp312-cp312-win_amd64,True
+pydeck,0.9.3,0.9.3,>=3.8,py2-none-any; py3-none-any,True
+pyparsing,3.3.3,3.3.3,>=3.9,py3-none-any,True
+pytest,8.4.2,8.4.2,>=3.9,py3-none-any,True
+python-dateutil,2.9.0.post0,2.9.0.post0,"!=3.0.*,!=3.1.*,!=3.2.*,>=2.7",py2-none-any; py3-none-any,True
+pytz,2026.5,2026.5,,py2-none-any; py3-none-any,True
+referencing,0.37.0,0.37.0,>=3.10,py3-none-any,True
+requests,2.34.2,2.34.2,>=3.10,py3-none-any,True
+rpds-py,2026.9.1,2026.9.1,>=3.11,cp312-cp312-win_amd64,True
+scikit-learn,1.7.2,1.7.2,>=3.10,cp312-cp312-win_amd64,True
+scipy,1.16.2,1.16.2,>=3.11,cp312-cp312-win_amd64,True
+six,1.17.0,1.17.0,">=2.7, !=3.0.*, !=3.1.*, !=3.2.*",py2-none-any; py3-none-any,True
+smmap,5.0.3,5.0.3,>=3.7,py3-none-any,True
+streamlit,1.50.0,1.50.0,">=3.9, !=3.9.7",py3-none-any,True
+tenacity,9.2.1,9.2.1,>=3.10,py3-none-any,True
+threadpoolctl,3.7.0,3.7.0,>=3.9,py3-none-any,True
+toml,0.10.2,0.10.2,">=2.6, !=3.0.*, !=3.1.*, !=3.2.*",py2-none-any; py3-none-any,True
+tornado,6.5.10,6.5.10,>= 3.9,cp39-abi3-win_amd64,True
+typing_extensions,4.16.0,4.16.0,>=3.9,py3-none-any,True
+tzdata,2026.5,2026.5,>=2,py2-none-any; py3-none-any,True
+urllib3,2.8.0,2.8.0,>=3.10,py3-none-any,True
+watchdog,6.0.0,6.0.0,>=3.9,py3-none-win_amd64,True

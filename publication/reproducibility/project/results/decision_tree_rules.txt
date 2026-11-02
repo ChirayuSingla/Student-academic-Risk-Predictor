@@ -1,0 +1,28 @@
+|--- numeric__failures <= 0.5000
+|   |--- categorical__schoolsup_yes <= 0.5000
+|   |   |--- numeric__absences <= 0.5000
+|   |   |   |--- numeric__Medu <= 3.5000
+|   |   |   |   |--- numeric__Walc <= 1.5000
+|   |   |   |   |   |--- class: 1
+|   |   |   |   |--- numeric__Walc >  1.5000
+|   |   |   |   |   |--- class: 1
+|   |   |   |--- numeric__Medu >  3.5000
+|   |   |   |   |--- class: 0
+|   |   |--- numeric__absences >  0.5000
+|   |   |   |--- categorical__Mjob_services <= 0.5000
+|   |   |   |   |--- numeric__absences <= 8.5000
+|   |   |   |   |   |--- class: 0
+|   |   |   |   |--- numeric__absences >  8.5000
+|   |   |   |   |   |--- class: 1
+|   |   |   |--- categorical__Mjob_services >  0.5000
+|   |   |   |   |--- class: 0
+|   |--- categorical__schoolsup_yes >  0.5000
+|   |   |--- class: 1
+|--- numeric__failures >  0.5000
+|   |--- numeric__absences <= 1.0000
+|   |   |--- class: 1
+|   |--- numeric__absences >  1.0000
+|   |   |--- numeric__Dalc <= 1.5000
+|   |   |   |--- class: 1
+|   |   |--- numeric__Dalc >  1.5000
+|   |   |   |--- class: 1

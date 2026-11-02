@@ -1,0 +1,12 @@
+{
+  "status": "passed",
+  "checks": {
+    "split_and_outer_fold_isolation": true,
+    "all_16_heldout_variants_recomputed": true,
+    "all_100_nested_model_fold_outputs_recomputed": true,
+    "subgroup_denominators_and_rate_intervals": true,
+    "feature_exclusion_schemas": true,
+    "bootstrap_table_complete_and_finite": true,
+    "original_reproduction": true
+  }
+}

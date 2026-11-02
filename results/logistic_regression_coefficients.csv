@@ -1,0 +1,40 @@
+transformed_feature,raw_feature,coefficient_log_odds,odds_ratio,reference_category
+numeric__age,age,0.2753440301048627,1.3169836789728082,per training standard deviation
+numeric__Medu,Medu,-0.10919954556260776,0.8965514967745802,per training standard deviation
+numeric__Fedu,Fedu,-0.12013691227475644,0.8867990147349082,per training standard deviation
+numeric__traveltime,traveltime,-0.021423156325550013,0.9788046895282373,per training standard deviation
+numeric__studytime,studytime,-0.1052375190536023,0.9001107037517548,per training standard deviation
+numeric__failures,failures,0.6180042848516093,1.8552218504747018,per training standard deviation
+numeric__famrel,famrel,-0.23902042845358504,0.7873987968686128,per training standard deviation
+numeric__freetime,freetime,-0.18671541019263405,0.8296798212106368,per training standard deviation
+numeric__goout,goout,0.4614559049343686,1.5863819257891651,per training standard deviation
+numeric__Dalc,Dalc,0.24389031363669988,1.2762043405991559,per training standard deviation
+numeric__Walc,Walc,-0.2514895809160194,0.7776415598802775,per training standard deviation
+numeric__health,health,0.14807294539591098,1.15959748057524,per training standard deviation
+numeric__absences,absences,0.14161652518989995,1.1521347491596365,per training standard deviation
+categorical__school_MS,school,-0.25831426160393883,0.7723524732369844,GP
+categorical__sex_M,sex,-0.4323078174020911,0.6490095694950457,F
+categorical__address_U,address,-0.25221750333709936,0.7770757031281714,R
+categorical__famsize_LE3,famsize,-0.30350200125099513,0.7382284117499769,GT3
+categorical__Pstatus_T,Pstatus,0.44567865108067145,1.5615495836271216,A
+categorical__Mjob_health,Mjob,-0.008424137468532905,0.9916112461489803,at_home
+categorical__Mjob_other,Mjob,0.3133652942896659,1.3680211700859763,at_home
+categorical__Mjob_services,Mjob,-0.42467678050428226,0.6539811304237322,at_home
+categorical__Mjob_teacher,Mjob,0.5545837205942308,1.741216001524316,at_home
+categorical__Fjob_health,Fjob,0.31849472166837334,1.3750563631611987,at_home
+categorical__Fjob_other,Fjob,0.05854776880592591,1.0602956335412368,at_home
+categorical__Fjob_services,Fjob,0.4798880159391527,1.61589343775146,at_home
+categorical__Fjob_teacher,Fjob,-0.18093583406432376,0.8344889027391751,at_home
+categorical__reason_home,reason,-0.49832728470582854,0.6075460618260852,course
+categorical__reason_other,reason,-0.7288728944461957,0.4824524586050183,course
+categorical__reason_reputation,reason,-0.4985473236946069,0.6074123927117524,course
+categorical__guardian_mother,guardian,0.16614736798061625,1.1807470932173194,father
+categorical__guardian_other,guardian,0.2524165728796091,1.2871321099499007,father
+categorical__schoolsup_yes,schoolsup,0.7192433978781648,2.052879409996102,no
+categorical__famsup_yes,famsup,0.484701228513386,1.6236898241456017,no
+categorical__paid_yes,paid,-0.00781932620193004,0.9922111652033555,no
+categorical__activities_yes,activities,0.23072668970799315,1.259514954003131,no
+categorical__nursery_yes,nursery,0.27334706915047235,1.3143563382099095,no
+categorical__higher_yes,higher,-0.5021053555068891,0.6052550403354348,no
+categorical__internet_yes,internet,-0.2314446165665622,0.7933866347622363,no
+categorical__romantic_yes,romantic,0.30496188373243244,1.3565732945100943,no

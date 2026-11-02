@@ -1,0 +1,8 @@
+{
+  "python": "3.12.10",
+  "executable": "C:\\Users\\chirayu singla\\OneDrive\\Desktop\\chiku\\.venv\\Scripts\\python.exe",
+  "port": 62828,
+  "status": "passed",
+  "health_http": 200,
+  "app_http": 200
+}

@@ -1,0 +1,22 @@
+.venv/
+.venv*/
+.diagnostics/
+.runtime/
+.local-tools/
+__pycache__/
+.pytest_cache/
+.ipynb_checkpoints/
+.streamlit/secrets.toml
+
+# Local credentials and editor settings
+.env
+.env.*
+!.env.example
+.vscode/
+
+# Duplicate project exports and local document-review renders
+/student-academic-risk-project/
+/student-academic-risk-project.zip
+/student+performance/
+/publication/Research_Revision_Package.zip
+/publication/review/

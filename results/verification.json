@@ -1,0 +1,28 @@
+{
+  "status": "passed",
+  "run_id": "daf3b3a9-f0eb-4190-b811-7364bf8d80f7",
+  "checks": {
+    "dataset_hash_and_real_mathematics_schema": true,
+    "grade_exclusion_and_exact_target_definition": true,
+    "reproduced_stratified_split_and_partition_isolation": true,
+    "five_training_only_stratified_folds": true,
+    "training_source_provenance_verified": true,
+    "executed_dependency_versions_match": true,
+    "logistic_regression_preprocessing_metrics_predictions_explanations_and_selection": true,
+    "decision_tree_preprocessing_metrics_predictions_explanations_and_selection": true,
+    "default_model_selected_from_training_cv": true,
+    "baselines_recomputed": true,
+    "all_required_figures_present_and_images_valid": true
+  },
+  "current_source_matches_training": false,
+  "changed_source_files": [
+    "src/acquire_data.py",
+    "src/data.py",
+    "src/run_pipeline.py",
+    "src/ui.py",
+    "src/verify.py",
+    "app.py",
+    "requirements.txt"
+  ],
+  "note": "Checks recompute test predictions/metrics without refitting models; fold preprocessing is replayed on training rows only."
+}

@@ -1,0 +1,1 @@
+Student Performance by Paulo Cortez (2008), original research with Alice M. G. Silva. UCI Machine Learning Repository, DOI 10.24432/C5TG7T. Data: https://archive.ics.uci.edu/dataset/320/student+performance. Licensed under CC BY 4.0: https://creativecommons.org/licenses/by/4.0/. Mathematics file is unmodified. No code license is asserted on behalf of the authors.

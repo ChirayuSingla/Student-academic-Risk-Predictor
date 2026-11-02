@@ -1,0 +1,71 @@
+{
+  "outer": "5-fold stratified, 2 repeats, seed 2026, on original 316 training records only",
+  "inner": "5-fold stratified shuffled seed 42, F2 then recall then ROC-AUC tie-break",
+  "grids": {
+    "logistic_regression": {
+      "classifier__C": [
+        0.01,
+        0.1,
+        1.0,
+        10.0
+      ],
+      "classifier__penalty": [
+        "l1",
+        "l2"
+      ],
+      "classifier__class_weight": [
+        null,
+        "balanced"
+      ]
+    },
+    "decision_tree": {
+      "classifier__criterion": [
+        "gini",
+        "entropy"
+      ],
+      "classifier__max_depth": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "classifier__min_samples_leaf": [
+        5,
+        10,
+        20
+      ],
+      "classifier__class_weight": [
+        null,
+        "balanced"
+      ]
+    },
+    "random_forest": {
+      "classifier__max_depth": [
+        3,
+        null
+      ],
+      "classifier__min_samples_leaf": [
+        10
+      ],
+      "classifier__class_weight": [
+        null,
+        "balanced"
+      ]
+    },
+    "gradient_boosting": {
+      "classifier__learning_rate": [
+        0.03,
+        0.1
+      ],
+      "classifier__max_depth": [
+        1,
+        2
+      ]
+    }
+  },
+  "threshold": 0.5,
+  "calibration": "sigmoid, ensemble=True, 3 stratified calibration folds seed 73; nested 5-fold hyperparameter searches within each fitting fold",
+  "bootstrap": "2000 class-stratified paired resamples seed 2701; fixed fitted models; percentile 95% intervals",
+  "exploratory": true
+}

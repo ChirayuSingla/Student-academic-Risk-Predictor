@@ -1,0 +1,29 @@
+{
+  "source_url": "https://archive.ics.uci.edu/static/public/320/student+performance.zip",
+  "dataset_doi": "10.24432/C5TG7T",
+  "citation": "Cortez, P. (2008). Student Performance [Dataset]. UCI Machine Learning Repository.",
+  "license": "CC BY 4.0",
+  "local_archive": "student+performance.zip",
+  "archive_sha256": "82ae9d66437b9808df42e8c89d2bb179c46e9cfbcf06f38abc1d20b3b747e177",
+  "official_contents_verified": true,
+  "files": {
+    "student-mat.csv": {
+      "sha256": "e47f9ee225e1ee6e69b7564e6dac7123e80b8486677fe111f351964cef5dec80",
+      "bytes": 56993
+    },
+    "student-por.csv": {
+      "sha256": "a7594a11d7771c0efe1a740824e0e833da9c4cad07c39a9766a874575563fb3f",
+      "bytes": 93220
+    },
+    "student.txt": {
+      "sha256": "f8d3e734e237071312790ca667330c66d75e706317f8d5e2125c479d70e962c1",
+      "bytes": 3206
+    },
+    "student-merge.R": {
+      "sha256": "a04f4ef19551c319428f642269c125faa21c521045946beead1c32e656269d31",
+      "bytes": 269
+    }
+  },
+  "experiment_file": "student-mat.csv",
+  "synthetic_data": false
+}

@@ -1,0 +1,9 @@
+﻿Inputs,Model,F2 mean,AUC mean
+All 30,LR,0.498,0.666
+All 30,DT,0.538,0.619
+No absences,LR,0.503,0.659
+No absences,DT,0.496,0.622
+Reduced 15,LR,0.530,0.678
+Reduced 15,DT,0.568,0.642
+No failures,LR,0.525,0.610
+No failures,DT,0.506,0.560
