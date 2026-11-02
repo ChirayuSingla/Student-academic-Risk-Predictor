@@ -35,7 +35,7 @@ def generate_report(metadata, metrics, results_dir):
         "the always-At-Risk baseline on test F2."
         for name in metadata["tuning"])
     caveat = "verified byte-for-byte against the official UCI download" if metadata["provenance"]["official_contents_verified"] else "extracted from the user-supplied UCI archive (official byte comparison not performed)"
-    report = f"""# Early Detection of Student Academic Risk Using Machine Learning
+    report = f"""# Retrospective Student Academic Risk Classification Using Interpretable Machine Learning
 
 This report is generated from an executed experiment, not manually entered scores.
 Run timestamp (UTC): {metadata['run_timestamp_utc']}. Run ID: `{metadata['run_id']}`.
@@ -154,7 +154,7 @@ function. That reference profile is a mathematical average, not an actual studen
 
 - Excluding G1/G2/G3 prevents direct grade leakage. UCI does not provide per-feature timestamps:
   total `absences` and potentially other attributes may span the school year. This is a retrospective,
-  grade-free early-warning **prototype**, not verified beginning-of-term prediction. Prospectively
+  retrospective grade-free classification **prototype**, not verified beginning-of-term prediction. Prospectively
   validate inputs frozen at a defined cutoff (or exclude unavailable fields) before operational use.
 - One small, historical, two-school mathematics cohort cannot establish generalization to other
   schools, countries, subjects, or present-day populations. Random splitting is not temporal or
@@ -189,7 +189,7 @@ Source documentation: [UCI Student Performance](https://archive.ics.uci.edu/data
     (results_dir / "report.md").write_text(report, encoding="utf-8")
     summary = f"""# Experiment summary
 
-**Early Detection of Student Academic Risk Using Machine Learning**
+**Retrospective Student Academic Risk Classification Using Interpretable Machine Learning**
 
 **Data:** Original UCI mathematics CSV, 395 real students, 33 original columns;
 At Risk = G3 < 10 (130 students), Not At Risk = G3 >= 10 (265 students).

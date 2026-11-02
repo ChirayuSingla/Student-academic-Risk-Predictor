@@ -1,0 +1,9 @@
+{
+  "status": "passed",
+  "schema": "CFF 1.2.0 official JSON schema",
+  "validator": "jsonschema 4.26.0",
+  "format": "JSON subset of YAML",
+  "author_name_parsing": "Author confirmation required for given/family-name representation; full order preserved",
+  "licence": "Omitted pending author approval",
+  "doi": "Omitted; not assigned"
+}

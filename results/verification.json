@@ -18,6 +18,7 @@
   "changed_source_files": [
     "src/acquire_data.py",
     "src/data.py",
+    "src/reporting.py",
     "src/run_pipeline.py",
     "src/ui.py",
     "src/verify.py",

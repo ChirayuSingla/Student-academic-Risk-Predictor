@@ -1,0 +1,324 @@
+# Retrospective Student Academic Risk Classification Using Interpretable Machine Learning
+
+Chirayu Singla, Yuvraj Singh, and Rajay Vedaraj I S
+
+Department of Computer Science and Engineering, Vellore Institute of Technology, Vellore, Tamil Nadu, India
+
+Corresponding author: Rajay Vedaraj I S (e-mail: rajay@vit.ac.in).
+
+ABSTRACT This study assesses grade-free classification of final mathematics failure using the 395-record UCI Student Performance dataset. Logistic regression and a decision tree retain the original stratified 80/20 split, five-fold training cross-validation, class-weight search, recall-weighted F2 selection, and 0.5 threshold. Their held-out predictions are reproduced to numerical precision. Both identify 18 of 26 failing students; logistic regression has precision 0.500 and area under the receiver operating characteristic curve 0.744, while the tree has precision 0.450 and area 0.693. Neither exceeds the Always-At-Risk baseline F2 of 0.710. Exploratory extensions add a prior-failure rule, a prevalence probability baseline, random forest, gradient boosting, repeated nested validation on the original training partition, feature ablations, calibration diagnostics, subgroup errors, and permutation-importance stability. The nested mean F2 values are 0.498 for logistic regression and 0.538 for the tree. The analyses quantify dependence on feature choices and the workload associated with risk flags. Small group counts and wide uncertainty intervals restrict model-ranking and fairness conclusions. Feature-level timestamps are unavailable, and excluding intermediate grades or total absences cannot establish beginning-of-term availability. The contribution is a reproducible assessment of retrospective prediction and its limits, accompanied by a Streamlit research prototype. Prospective early warning, independent-cohort transportability, and intervention benefit remain unvalidated.
+
+INDEX TERMS Academic risk, calibration, educational data mining, fairness, interpretable machine learning, reproducibility, student performance.
+
+## I. INTRODUCTION
+
+Academic risk models can inform the allocation of educational support, but their value depends on when predictors are available, how many students are flagged, and how reliably results transfer. This study defines risk narrowly as a final mathematics grade below the passing threshold. It does not model student well-being, dropout, or a causal need for intervention. The public UCI Student Performance cohort [1], introduced by Cortez and Silva [2], provides a reproducible setting for examining these distinctions.
+
+The original experiment compared logistic regression (LR) with a decision tree (DT) using 30 non-grade inputs. We preserve that experiment and reproduce its probabilities. We then evaluate whether its conclusions survive meaningful baselines, resampling, and feature exclusions. The title uses retrospective classification because the dataset lacks predictor-level timestamps. Removing grades limits direct outcome information but cannot prove that every remaining feature was known at an actionable early date.
+
+The research questions concern predictive performance relative to simple policies, variability under nested resampling, sensitivity to absences and personal attributes, and the interpretation of errors and fitted associations. The contribution is an empirical audit and reproducible sensitivity assessment on this cohort. It introduces no new learning algorithm and does not claim a new early-warning framework or state-of-the-art performance. All extensions are exploratory because the original test results were already known when this revision was designed.
+
+## II. RELATED WORK AND RESEARCH GAP
+
+### A. Prediction time and transportability
+
+Ewais et al. [3] evaluate six regression models using 1,419 institutional records with 12 academic features. Their private higher-education dataset, continuous outcome, and regression scores differ from the present public secondary-school classification task. Their reported results are context, not a benchmark reproduced here. Boujmiraz et al. [4] review recent machine learning and explainable approaches to student performance prediction, showing that model comparison and explanation are established research directions. A two-classifier comparison therefore provides limited novelty on its own.
+
+Santos and Henriques [5] evaluate learning-management-system logs at defined stages of course completion, illustrating the timing evidence needed for an early prediction claim. Kleter et al. [6] examine generalization within courses and cohorts and report limitations in model stability. A random split within two schools cannot answer either temporal transportability or generalization to an unseen institution. These studies motivate the present explicit separation between retrospective discrimination and prospective prediction.
+
+### B. Explanation and fairness
+
+Gunasekara and Saarela [7] synthesize explainability in learning analytics and educational data mining and identify limited quantified evaluation of explanations. Idowu [8] and Pham et al. [9] review fairness in educational prediction and emphasize context-dependent assessment. Our response is to report error rates with group denominators and to measure validation-fold permutation stability. Removing a recorded sensitive variable does not eliminate its proxies or establish fairness.
+
+The gap addressed here is specific to the original implementation: its selected cross-validation scores, uncalibrated probabilities, absence count, and explanatory outputs were not accompanied by a systematic robustness audit. Leakage controls [10], nested model selection [11], and reproducible pipelines [12] strengthen the evaluation. Intrinsic interpretability [13] and educational stakeholder needs [14] motivate retaining LR and DT as the primary models. The contribution remains bounded by one small historical dataset.
+
+## III. PROBLEM FORMULATION AND DATA
+
+For student i, the observed label is defined by (1). Class 1 is At Risk and class 0 is Not At Risk. The decision rule uses the estimated class-1 probability p_i and a fixed threshold of 0.5, as in (2). The grade threshold defines the outcome; the probability threshold defines a referral policy. A false negative misses a failing student, whereas a false positive flags a student who passes.
+
+y_i = 1[G3_i < 10] (1)
+
+yhat_i = 1[p_i >= 0.5] (2)
+
+### A. Source integrity and population
+
+Only student-mat.csv is analyzed. It has 395 rows and 33 columns, with 130 final grades below 10 and 265 at or above 10. There are no missing values or exact duplicate full rows. The file SHA-256 is e47f9ee225e1ee6e69b7564e6dac7123e80b8486677fe111f351964cef5dec80. Its hash matches the supplied acquisition provenance, which records comparison with the UCI archive. All rows are retained, including 38 records with G3 equal to zero; these cannot be independently separated into absence, withdrawal, or achievement mechanisms.
+
+The repository describes two Portuguese secondary schools and school-report and questionnaire data [1]. The mathematics sample size is 395; the repository summary count of 649 refers to the Portuguese-subject file and must not be substituted for it. The Portuguese file is not merged or used as an independent validation sample. Subject datasets can share students, and their outcomes and paid-course variables differ. Such a transfer would need explicit overlap handling and a separate scientific question.
+
+TABLE I. Original dataset partitions
+
+| Partition | n | Pass | At Risk |
+|---|---|---|---|
+| Full | 395 | 265 | 130 |
+| Training | 316 | 212 | 104 |
+| Test | 79 | 53 | 26 |
+
+
+### B. Inputs and temporal availability
+
+The 13 numeric or ordinal inputs are age, Medu, Fedu, traveltime, studytime, failures, famrel, freetime, goout, Dalc, Walc, health, and absences. The 17 categorical or binary inputs are school, sex, address, famsize, Pstatus, Mjob, Fjob, reason, guardian, schoolsup, famsup, paid, activities, nursery, higher, internet, and romantic. G3 is used only for label construction; G1, G2, and G3 never enter any fitted predictor. The failures field is a coded history of past failures, with observed values 0-3; its repository description is not treated as an exact uncapped count.
+
+Absences is an aggregate count with an unspecified observation cutoff. School support and self-reported circumstances may also reflect developments during the academic period. They are timing risks rather than demonstrated violations of a known timestamp. The no-absences ablation tests sensitivity to one suspect input; it does not certify all remaining variables as available before instruction. No feature-level temporal ordering can be reconstructed from the file.
+
+## IV. EXPERIMENTAL METHODS
+
+### A. Preserved experiment
+
+The original stratified 80/20 split uses random_state=42 and retains 316 training and 79 test rows with the class counts in Table I. Row IDs are saved, identical across models, and disjoint. Each scikit-learn Pipeline [12] fits preprocessing inside its training fold: numeric median imputation, categorical mode imputation, and one-hot encoding with drop="first" and handle_unknown="ignore". LR additionally standardizes numeric variables using its fitting rows. DT and ensemble models leave numeric values unscaled. The complete original-training encoder produces 39 transformed columns. Missing-value handling is defensive because the source file is complete.
+
+Both original searches use five shuffled stratified folds with seed 42, maximizing mean validation F2; exact ties favor recall, then receiver operating characteristic area. LR uses liblinear, max_iter=5000, C in {0.01, 0.1, 1, 10}, penalty in {l1, l2}, and class_weight in {None, balanced}, giving 16 candidates. DT uses criterion in {gini, entropy}, maximum depth in {2, 3, 4, 5, 6}, minimum leaf size in {5, 10, 20}, and the same class-weight choices, giving 60 candidates. Both selected models use balanced weights. No synthetic minority oversampling is performed. Weighting is evaluated within fitting folds rather than used to alter validation or test class prevalence [15].
+
+The selected LR has C=1 and l2 regularization. The selected DT uses entropy, maximum depth 5, and at least 20 unweighted training records per leaf. Their original selection-fold F2 means are 0.5101 and 0.5375, with population standard deviations 0.0743 and 0.0995. These are tuning scores, not independent performance estimates. The DT remains the original prototype default; the revision does not change that choice using test outcomes.
+
+### B. Baselines and additional models
+
+The majority policy predicts class 0 for every row; the Always-At-Risk policy predicts class 1. A prevalence baseline assigns the training positive fraction, 104/316, to every test record, providing a meaningful constant probability benchmark. A prior-failure rule flags failures > 0 with no tuned cutoff. Its hard scores of 0 and 1 permit ranking metrics but do not represent calibrated probabilities. It tests whether questionnaire complexity improves on one readily explained historical indicator.
+
+Random forest (RF) tests whether bagged trees reduce instability of a single tree. Its grid has 100 trees, maximum depth in {3, None}, minimum leaf size 10, and class_weight in {None, balanced}, giving four candidates. Gradient boosting (GB) tests shallow nonlinear additive interactions, with 100 stages, learning rate in {0.03, 0.1}, depth in {1, 2}, and minimum leaf size 10, giving four candidates. All random states are 42. They use the same split, inner folds, metric definitions, and fixed threshold as LR and DT, but deliberately smaller exploratory grids. No exhaustive claim about model families follows from these unequal search spaces. An explainable boosting machine is not added because it would broaden the software and tuning scope without resolving the principal temporal and validation limitations.
+
+### C. Repeated nested validation and ablations
+
+Repeated nested validation uses only the original 316 training rows. The outer design has five stratified folds repeated twice, with seed 2026. Every outer fitting subset repeats the complete five-fold hyperparameter search above, with inner seed 42; preprocessing is refitted inside each inner fold. Original test rows never enter outer or inner fits. All four model families share outer row partitions. Fold-wise means and sample standard deviations summarize variability; overlapping fits and repeated students make the ten fold scores dependent. No t-test, standard error divided by the square root of ten, or population confidence interval is inferred from those folds.
+
+LR and DT are also retuned under three feature exclusions on exactly the same outer folds: absences removed; failures removed; and a predefined reduced set excluding 15 personal, household, socioeconomic, health, and lifestyle variables. The latter removes sex, age, address, famsize, Pstatus, Medu, Fedu, Mjob, Fjob, guardian, internet, romantic, Dalc, Walc, and health. It retains 15 predictors. This is a sensitivity scenario, not a claim that all retained variables are ethically neutral. Feature subsets are recorded in feature_subsets.json. Full-original-training refits of each ablation are evaluated descriptively on the unchanged test rows; outer-validation summaries provide the principal sensitivity comparison.
+
+### D. Calibration and interpretation
+
+Sigmoid calibration is examined separately for LR and DT using three stratified calibration folds with seed 73 and ensemble averaging. Within each calibration fitting partition, a complete five-fold grid search selects its classifier. The disjoint calibration partition fits the sigmoid mapping. Test labels are never used to fit these mappings. This cross-fitted ensemble changes both fitting-set size and ensembling as well as calibration, so differences from the single raw model cannot be attributed solely to probability recalibration. Five fixed equal-width test bins show mean scores, observed fractions, sample counts, and Wilson intervals. These small-sample diagnostics do not establish calibrated probabilities in future cohorts.
+
+For LR, coefficients and exp(beta) describe conditional log-odds and odds ratios [16]. Numeric effects are per training standard deviation; categorical effects compare a level with the dropped reference. Ordinal inputs are treated as equally spaced, a modeling assumption. Class weighting changes the fitted score distribution. Regularized coefficients are descriptive and have no conventional unpenalized standard-error inference here. For DT, depth and leaf constraints limit complexity, and exact split paths describe a fitted prediction. Impurity reduction can favor variables with more split opportunities [17]; it is not a causal effect or a stability measure.
+
+To assess predictive reliance, each outer validation fold permutes each raw feature ten times for its fitted LR and DT, measuring the decrease in average precision. Raw-feature permutation jointly moves any one-hot levels. Reported means and standard deviations span the ten outer folds. Correlated features can mask or share importance, and permutation can generate unusual combinations; negative values can arise from finite-sample variation. LR coefficients are also saved per outer fit for sign and rank inspection. Model explanation and causal explanation remain distinct [18].
+
+## V. METRICS AND STATISTICAL ANALYSIS
+
+All binary metrics use failing students as the positive class. Accuracy is the fraction correct; precision is the fraction of flags that identify failing students; recall is the fraction of observed failures flagged; specificity is the fraction of passing students left unflagged. F1 balances precision and recall. F2 gives recall greater weight, with four multiplying the false-negative count in its count-based denominator as in (3). It does not encode a universally valid institutional cost ratio or referral budget.
+
+F2 = 5TP / (5TP + 4FN + FP) (3)
+
+The area under the receiver operating characteristic curve (ROC-AUC) measures score ranking across thresholds. Average precision (AP) summarizes the precision-recall trade-off [19] using the non-interpolated scikit-learn definition, not trapezoidal integration. Its no-skill reference is positive prevalence. The Brier score in (4) measures mean squared probability error [20]; smaller is better. Brier improvement can reflect discrimination and does not prove calibration.
+
+Brier = (1/n) SUM_i (p_i - y_i)^2 (4)
+
+At-risk recall and subgroup rates have 95% Wilson intervals based on their appropriate positive or negative denominators. Other held-out metrics use 2,000 class-stratified bootstrap resamples with seed 2701, resampling the same student indices jointly for paired comparisons. Percentile intervals condition on the observed class counts, fixed fitted models, and this cohort. They omit retraining, school clustering, and between-cohort variation. Precision is set to zero when no positive predictions occur. The exact two-sided McNemar test compares LR and DT correctness on the original test rows. Paired bootstrap intervals compare F2, ROC-AUC, AP, and Brier differences. These exploratory comparisons do not support a family of confirmatory significance claims.
+
+Subgroup evaluation reports recorded sex, address type, and school with actual sample sizes, positives, recall, false-positive rate, and Wilson intervals. The binary sex labels reproduce the dataset coding and are not a comprehensive representation of gender. Small denominators restrict inference, especially for the smaller school. Threshold sensitivity at 0.1 increments from 0.1 to 0.9 is descriptive on the known test set; no threshold is selected or deployed from that analysis.
+
+## VI. RESULTS
+
+### A. Reproduction and held-out performance
+
+Both reproduced original pipelines match all saved test probabilities within 1.12 x 10^-16. LR and DT each flag 18 of 26 failing students and miss eight. Recall is 0.6923, with 95% Wilson interval 0.5001-0.8350. LR flags 36 students and DT flags 40; LR has four fewer false positives. The unchanged holdout results and additional exploratory models are summarized in Tables II and III. Equal recall does not imply that the same individuals are identified.
+
+TABLE II. Unchanged test partition at threshold 0.5
+
+| Model | Acc. | Prec. | Recall | F2 |
+|---|---|---|---|---|
+| LR | 0.671 | 0.500 | 0.692 | 0.643 |
+| DT | 0.620 | 0.450 | 0.692 | 0.625 |
+| RF | 0.722 | 0.583 | 0.538 | 0.547 |
+| GB | 0.734 | 0.647 | 0.423 | 0.455 |
+| Majority | 0.671 | 0.000 | 0.000 | 0.000 |
+| Always risk | 0.329 | 0.329 | 1.000 | 0.710 |
+| Prevalence | 0.671 | 0.000 | 0.000 | 0.000 |
+| Prior failure | 0.734 | 0.647 | 0.423 | 0.455 |
+
+
+TABLE III. Test ranking and probability error
+
+| Model | F1 | AUC | AP | Brier |
+|---|---|---|---|---|
+| LR | 0.581 | 0.744 | 0.598 | 0.207 |
+| DT | 0.545 | 0.693 | 0.569 | 0.216 |
+| RF | 0.560 | 0.723 | 0.676 | 0.209 |
+| GB | 0.512 | 0.721 | 0.564 | 0.197 |
+| Majority | 0.000 | 0.500 | 0.329 | 0.329 |
+| Always risk | 0.495 | 0.500 | 0.329 | 0.671 |
+| Prevalence | 0.000 | 0.500 | 0.329 | 0.221 |
+| Prior failure | 0.512 | 0.655 | 0.464 | 0.266 |
+
+
+The majority policy matches LR accuracy at 0.6709 while detecting no failures. Always-At-Risk has perfect recall and F2=0.7104, above LR (0.6429) and DT (0.6250). Thus the original classifiers do not improve the held-out recall-weighted objective over flagging everyone. Their practical trade-off is fewer flags and greater precision. The prevalence benchmark is particularly relevant for probability error; deterministic majority and always-positive scores are weak probability baselines. Hard prior-failure scores require the same caution.
+
+![FIGURE 1. Reproduced original confusion matrices on 79 test students. Rows show observed outcomes and columns predictions. LR: TN=35, FP=18, FN=8, TP=18; DT: TN=31, FP=22, FN=8, TP=18.](figures/figure1_confusion.png)
+
+![FIGURE 2. Test score ranking for LR, DT, RF, and GB. The dashed precision-recall reference is 26/79. Added models are exploratory extensions; the test cohort is unchanged.](figures/figure2_curves.png)
+
+RF has test F2=0.547 and ROC-AUC=0.723; GB has F2=0.455 and ROC-AUC=0.721. These observations describe bounded searches rather than establish a best classifier for deployment. Bootstrap intervals for every core metric are supplied with the experiment tables.
+
+### B. Paired comparison and resampling variability
+
+The original LR-versus-DT correctness comparison has 15 students correct only under LR and 11 correct only under DT. The exact two-sided McNemar p-value is 0.5572. This tests the marginal correctness difference, not equality of recall, calibration, or area under the curve.
+
+Paired differences are computed as LR minus DT: F2 0.018 (95% interval -0.114 to 0.142); ROC-AUC 0.051 (95% interval -0.074 to 0.180); AP 0.030 (95% interval -0.135 to 0.199); Brier -0.009 (95% interval -0.059 to 0.040). Intervals reflect the stated conditional bootstrap design and cannot establish transportability.
+
+TABLE IV. Nested outer validation on 316 original training rows
+
+| Model | F2 mean (SD) | AUC mean (SD) |
+|---|---|---|
+| LR | 0.498 (0.140) | 0.666 (0.091) |
+| DT | 0.538 (0.113) | 0.619 (0.044) |
+| RF | 0.468 (0.145) | 0.665 (0.067) |
+| GB | 0.338 (0.094) | 0.646 (0.048) |
+| Prior failure | 0.422 (0.137) | 0.639 (0.066) |
+| Always risk | 0.710 (0.006) | 0.500 (0.000) |
+
+
+Table IV uses ten outer validation folds, not the folds used to choose a candidate. These models are fitted on about four fifths of the original training partition and therefore differ from the full-training holdout models. Their dependent fold variation describes split sensitivity. Baselines use the same validation rows. Neither repeated resampling nor a favorable individual holdout estimate creates an independent cohort.
+
+![FIGURE 3. Outer-fold F2 values on the original training partition. Each dot is one dependent outer fold; black markers show means. The plot is not a distribution of independent cohorts.](figures/figure3_nested.png)
+
+### C. Feature exclusions
+
+TABLE V. Retuned nested feature exclusions
+
+| Inputs | Model | F2 mean | AUC mean |
+|---|---|---|---|
+| All 30 | LR | 0.498 | 0.666 |
+| All 30 | DT | 0.538 | 0.619 |
+| No absences | LR | 0.503 | 0.659 |
+| No absences | DT | 0.496 | 0.622 |
+| Reduced 15 | LR | 0.530 | 0.678 |
+| Reduced 15 | DT | 0.568 | 0.642 |
+| No failures | LR | 0.525 | 0.610 |
+| No failures | DT | 0.506 | 0.560 |
+
+
+Ablation values in Table V compare identical outer partitions with complete retuning. They measure predictive dependence under the stated protocol; they are not causal effects of attendance, past failure, or personal characteristics. Removing failures probes whether the multivariable model has information beyond the strongest simple history rule. Removing absences addresses one availability concern but cannot resolve the remaining unknown timestamps. The reduced set addresses a defined privacy-sensitive scenario; it does not demonstrate fair treatment through unawareness.
+
+Removing absences leaves nested LR F2 close to its original value (0.503 versus 0.498), while DT F2 decreases from 0.538 to 0.496. The reduced 15-feature scenario has nested F2 of 0.530 for LR and 0.568 for DT, but its held-out F2 falls to 0.530 and 0.440. These discordant patterns discourage a stable benefit claim. Removing failures lowers nested ROC-AUC from 0.666 to 0.610 for LR and from 0.619 to 0.560 for DT, even though F2 need not fall. This illustrates the distinction between ranking information and a particular threshold policy.
+
+### D. Calibration and threshold diagnostics
+
+TABLE VI. Exploratory calibration ensembles on test rows
+
+| Score | Brier | Recall | F2 |
+|---|---|---|---|
+| LR | 0.207 | 0.692 | 0.643 |
+| LR__sigmoid | 0.197 | 0.077 | 0.094 |
+| DT | 0.216 | 0.692 | 0.625 |
+| DT__sigmoid | 0.202 | 0.077 | 0.094 |
+
+
+The calibration ensembles use only training observations for both tuning and calibration. Figure 4 shows test reliability bins and their wide rate intervals. Brier changes in Table VI do not, by themselves, prove or disprove calibration, and the ensemble procedure also changes the base models. The original application continues to display its original uncalibrated scores; no new calibrated model is silently substituted.
+
+Both sigmoid ensembles flag only two of the 26 failing test students at threshold 0.5, giving recall 0.0769 and F2 0.0943. Their Brier scores improve to 0.1968 for LR and 0.2021 for DT, compared with the prevalence baseline of 0.2208. Thus lower probability error coexists with substantially lower recall at the unchanged threshold. An operational threshold would need training-only selection tied to support capacity and subsequent independent validation.
+
+![FIGURE 4. Raw and sigmoid-ensemble reliability diagrams on the same test rows. Bins span fixed probability intervals of width 0.2; empty bins are omitted. Vertical bars are 95% Wilson intervals for the observed fraction.](figures/figure4_calibration.png)
+
+![FIGURE 5. Descriptive threshold sensitivity of test recall and referral workload. No threshold is optimized from these curves; the reported operating threshold remains 0.5.](figures/figure6_thresholds.png)
+
+### E. Subgroup errors and explanation stability
+
+TABLE VII. Recorded sex subgroups at threshold 0.5
+
+| Model | Group | n / fail | Recall | FPR |
+|---|---|---|---|---|
+| LR | F | 43 / 17 | 0.706 | 0.538 |
+| LR | M | 36 / 9 | 0.667 | 0.148 |
+| DT | F | 43 / 17 | 0.706 | 0.346 |
+| DT | M | 36 / 9 | 0.667 | 0.481 |
+
+
+Table VII and Figure 6 retain denominators rather than presenting a single fairness score. Address and school results, including false-positive intervals, are supplied in subgroups.csv. Differences warrant further investigation, but the small samples and multiple overlapping comparisons do not establish equalized odds, absence of bias, or a reliable disparity estimate for a future school. No group-specific thresholds or fairness mitigation are fitted.
+
+For LR, the false-positive rate is 14/26=0.538 for recorded F and 4/27=0.148 for recorded M; the corresponding Wilson intervals are 0.355-0.712 and 0.059-0.325. DT instead has rates 9/26=0.346 and 13/27=0.481. Recall is 12/17 for recorded F and 6/9 for recorded M under both models. The differing false-positive patterns show why overall recall alone is insufficient to assess subgroup experience. Only three failing test students belong to the smaller school, limiting its rate precision.
+
+![FIGURE 6. Original-model recall by recorded sex with 95% Wilson intervals. Intervals use the failing students in each subgroup, not the full subgroup size.](figures/figure7_subgroups.png)
+
+The original LR coefficients include reason_other=-0.7289 relative to course (odds ratio 0.4825), schoolsup_yes=0.7192 relative to no (2.0529), and failures=0.6180 per training standard deviation (1.8552). These odds ratios multiply model odds conditional on other inputs; they are not probability ratios. A positive support coefficient may reflect support assigned to already struggling students and does not show harm from support.
+
+The selected DT has depth five and ten leaves. It first splits on failures <= 0.5. For students with no prior failure, it next splits on school support; branches then use absences and background attributes. Original grouped impurity importances are failures 0.3618, absences 0.2653, Mjob 0.1384, Medu 0.0963, and schoolsup 0.0853. A zero importance means no split in this particular tree. The complete fitted rules and coefficient table accompany the source package.
+
+![FIGURE 7. Raw-feature permutation importance for LR and DT, showing the eight largest mean AP decreases across outer validation folds. Bars show means and error bars show sample standard deviations across dependent folds, not confidence intervals.](figures/figure5_importance.png)
+
+Figure 7 assesses out-of-fold predictive reliance rather than training impurity. Variation across folds limits a stable substantive ranking of features. Correlation, small validation samples, and hyperparameter changes all contribute to this variability. The underlying per-fold coefficients and raw permutation results support independent inspection. No selected feature is presented as a proven intervention target.
+
+## VII. STREAMLIT IMPLEMENTATION AND REPRODUCIBILITY
+
+The Streamlit research prototype [21] loads the original complete pipelines and authenticates model hashes and required package versions. It requests the 30 non-grade variables, validates codes and ranges, and flags values outside observed training support. LR explanations group additive log-odds contributions around the mean transformed training profile; their sum reconstructs the decision function. That mathematical reference need not represent an actual student. DT explanations follow the exact fitted path and show leaf support. Weighted leaf probability differs from the unweighted observed proportion.
+
+The current interface accepts a student name and a school entry, retains entered values in the session, and does not create a persistent student database in the inspected application code. A name is unnecessary to model inference and should be removed from a research deployment unless operationally justified. Session handling does not establish privacy compliance. No educator usability study, institutional deployment evaluation, or measured intervention benefit is available.
+
+The revision executes under Python 3.12.10 with NumPy 2.2.6, pandas 2.3.3, SciPy 1.16.2, scikit-learn 1.7.2, Matplotlib 3.10.7, and joblib 1.5.2. This corrects the original manuscript environment claim of Python 3.12.14: the current interpreter is 3.12.10. Original metadata describes a historical run and is retained separately. Source, row and fold indices, search grids, probabilities, metrics, and environment records accompany the revision. The original 27 project tests pass in this environment. Their expected warning records prior source changes relative to the authenticated historical training snapshot; this revision does not overwrite it.
+
+## VIII. DISCUSSION AND LIMITATIONS
+
+The key finding is a trade-off between selective referral and the objective rewarded by F2. Flagging every student gives perfect recall without prioritization. The original models reduce the number of referrals but miss eight observed failures each. Model choice therefore requires an explicit institutional capacity and a defensible balance between missed support and unnecessary labeling. These quantities have not been elicited here, so no cost-optimal decision policy is claimed.
+
+Repeated nested evaluation reduces reuse of a tuning fold as a performance estimate, but cannot repair the dataset population, unknown feature timing, or previously examined holdout. The outer folds cover the original training partition only. RF and GB are useful checks on model diversity but their bounded searches do not establish that more complex models are needed. Calibration, ablations, subgroup comparisons, and threshold curves are exploratory and require independent replication.
+
+The study contains only 395 historical observations from two schools and one subject. A random split may share school and class context across fitting and validation rows; class identifiers and repeated-cohort timestamps are unavailable. The 26 positive test cases make recall and subgroup estimates imprecise. Binomial and bootstrap intervals assume exchangeable students and do not account for unobserved clustering. There is no external institution, future academic year, or prospective feature snapshot.
+
+Questionnaire measurement error, ordinal coding, and correlated socioeconomic proxies constrain interpretation. The binary label treats grades 9 and 10 as categorically different and combines all failures, including zero grades. It does not describe severity, dropout, or causes. Full-row duplicate checks cannot prove unique people across subject files or classrooms. Excluding personal attributes can reduce information without eliminating indirect discrimination [22]. Explanations describe fitted associations and do not establish that changing an input improves outcomes.
+
+Temporal validation requires a new data design. OULAD [23], licensed CC BY 4.0, contains dated virtual-learning activity and assessments and is a suitable separate benchmark for cutoff-based prediction. It concerns higher-education modules, uses different outcomes, and requires student-level grouping, cutoff truncation before aggregation, and presentation-based temporal splits. It is not pooled here with mathematics records or represented as compatible external validation of this fitted classifier. A prospective cohort from the intended secondary-school setting would provide the stronger test of the intended use.
+
+## IX. ETHICAL CONSIDERATIONS
+
+Public availability does not establish permission to collect comparable identifiable data in a school. Recorded sex, family circumstances, health, alcohol consumption, and socioeconomic proxies require a clear purpose, data minimization, access controls, retention policy, and human oversight [8], [9], [22]. Risk flags should initiate contextual review and voluntary support, with opportunities to correct errors. They should not automatically determine grading, discipline, progression, or access to assistance. This secondary analysis uses existing public records and recruits no new participants; it does not establish an institutional ethics exemption or approval.
+
+## X. CONCLUSION AND FUTURE WORK
+
+The original LR and DT results are reproducible on the UCI mathematics cohort with grades excluded, training-only preprocessing, F2-based tuning, and a fixed threshold. Both detect 18 of 26 test failures; neither exceeds indiscriminate flagging on held-out F2. Added baselines, bounded ensemble comparisons, repeated nested validation, feature exclusions, calibration diagnostics, subgroup rates, and permutation stability provide a more complete account of model behavior. These analyses strengthen transparency without demonstrating prospective early detection or real-world educational effectiveness.
+
+Further work should define a prediction cutoff, collect timestamped features, elicit support capacity, and evaluate an independent future cohort before selecting an operational policy. Calibration and fairness assessment need substantially larger samples and contextual review. Educator studies should test whether explanations are understood, and intervention studies should measure student outcomes rather than infer benefit from software functionality.
+
+## ACKNOWLEDGMENT
+
+The Student Performance dataset and original work of Paulo Cortez and Alice M. G. Silva are acknowledged. OpenAI ChatGPT through Codex [24] assisted revision of the abstract and Sections I-X, experimental scripting, and figure and table preparation. The AI-assisted material and generated code require author review and verification before submission. Authorship and responsibility remain with the named human authors.
+
+## DATA AND CODE AVAILABILITY
+
+The mathematics data are available through UCI [1] under CC BY 4.0. Source code, trained artifacts, configurations, split and fold records, predictions, tables, and figure sources are publicly available at https://github.com/ChirayuSingla/Student-academic-Risk-Predictor. The repository preserves the original training-source snapshots and the exploratory extension scripts. The v1.0.0 release is prepared for author approval; no public versioned release or Zenodo DOI has been issued for this project.
+
+## REFERENCES
+
+[1] P. Cortez, "Student Performance," UCI Machine Learning Repository, 2008, dataset, doi: 10.24432/C5TG7T. [Online]. Available: https://archive.ics.uci.edu/dataset/320/student+performance. Accessed: Nov. 1, 2026.
+
+[2] P. Cortez and A. M. G. Silva, "Using data mining to predict secondary school student performance," in Proc. 5th Future Business Technology Conf. (FUBUTEC), 2008, pp. 5-12. [Online]. Available: https://hdl.handle.net/1822/8024.
+
+[3] A. Ewais, A. Arram, S. Diab, H. A. Alkhazaleh, Y. Himeur, and H. I. Ashqar, "Using machine learning for early identification of At-risk students," Scientific Reports, vol. 16, Art. no. 19944, 2026, doi: 10.1038/s41598-026-48426-1.
+
+[4] S. Boujmiraz, H. Darhmaoui, and A. Drissi el maliani, "Predicting student performance: A comprehensive review of machine learning, deep learning, and explainable AI approaches," Computers and Education: Artificial Intelligence, vol. 10, Art. no. 100548, 2026, doi: 10.1016/j.caeai.2026.100548.
+
+[5] R. M. Santos and R. Henriques, "Accurate, timely, and portable: Course-agnostic early prediction of student performance from LMS logs," Computers and Education: Artificial Intelligence, vol. 5, Art. no. 100175, 2023, doi: 10.1016/j.caeai.2023.100175.
+
+[6] S. Kleter, U. Matzat, and R. Conijn, "Boundary conditions of generalizing predictive models for academic performance: Within cohort versus within course," IEEE Transactions on Learning Technologies, vol. 17, 2024, doi: 10.1109/TLT.2024.3443079.
+
+[7] S. Gunasekara and M. Saarela, "Systematic literature review on explainable learning analytics and educational data mining," IEEE Access, vol. 13, pp. 214387-214408, 2025, doi: 10.1109/ACCESS.2025.3643645.
+
+[8] J. A. Idowu, "Debiasing education algorithms," International Journal of Artificial Intelligence in Education, vol. 34, pp. 1510-1540, 2024, doi: 10.1007/s40593-023-00389-4.
+
+[9] N. Pham, H. Pham Ngoc, and A. Nguyen-Duc, "Fairness for machine learning software in education: A systematic mapping study," Journal of Systems and Software, vol. 219, Art. no. 112244, 2025, doi: 10.1016/j.jss.2024.112244.
+
+[10] S. Kapoor and A. Narayanan, "Leakage and the reproducibility crisis in machine-learning-based science," Patterns, vol. 4, no. 9, Art. no. 100804, 2023, doi: 10.1016/j.patter.2023.100804.
+
+[11] G. C. Cawley and N. L. C. Talbot, "On over-fitting in model selection and subsequent selection bias in performance evaluation," Journal of Machine Learning Research, vol. 11, pp. 2079-2107, 2010. [Online]. Available: https://jmlr.org/papers/v11/cawley10a.html.
+
+[12] F. Pedregosa et al., "Scikit-learn: Machine learning in Python," Journal of Machine Learning Research, vol. 12, pp. 2825-2830, 2011. [Online]. Available: https://jmlr.org/papers/v12/pedregosa11a.html.
+
+[13] C. Rudin, "Stop explaining black box machine learning models for high stakes decisions and use interpretable models instead," Nature Machine Intelligence, vol. 1, pp. 206-215, 2019, doi: 10.1038/s42256-019-0048-x.
+
+[14] H. Khosravi et al., "Explainable artificial intelligence in education," Computers and Education: Artificial Intelligence, vol. 3, Art. no. 100074, 2022, doi: 10.1016/j.caeai.2022.100074.
+
+[15] H. He and E. A. Garcia, "Learning from imbalanced data," IEEE Transactions on Knowledge and Data Engineering, vol. 21, no. 9, pp. 1263-1284, 2009, doi: 10.1109/TKDE.2008.239.
+
+[16] D. W. Hosmer, S. Lemeshow, and R. X. Sturdivant, Applied Logistic Regression, 3rd ed. Hoboken, NJ, USA: Wiley, 2013, doi: 10.1002/9781118548387.
+
+[17] C. Strobl, A.-L. Boulesteix, A. Zeileis, and T. Hothorn, "Bias in random forest variable importance measures: Illustrations, sources and a solution," BMC Bioinformatics, vol. 8, Art. no. 25, 2007, doi: 10.1186/1471-2105-8-25.
+
+[18] G. Shmueli, "To explain or to predict?" Statistical Science, vol. 25, no. 3, pp. 289-310, 2010, doi: 10.1214/10-STS330.
+
+[19] T. Saito and M. Rehmsmeier, "The precision-recall plot is more informative than the ROC plot when evaluating binary classifiers on imbalanced datasets," PLoS ONE, vol. 10, no. 3, Art. no. e0118432, 2015, doi: 10.1371/journal.pone.0118432.
+
+[20] G. W. Brier, "Verification of forecasts expressed in terms of probability," Monthly Weather Review, vol. 78, no. 1, pp. 1-3, 1950, doi: 10.1175/1520-0493(1950)078<0001:VOFEIT>2.0.CO;2.
+
+[21] Streamlit, "Streamlit documentation," accessed Nov. 1, 2026. [Online]. Available: https://docs.streamlit.io.
+
+[22] R. S. Baker and A. Hawn, "Algorithmic bias in education," International Journal of Artificial Intelligence in Education, vol. 32, pp. 1052-1092, 2022, doi: 10.1007/s40593-021-00285-9.
+
+[23] J. Kuzilek, M. Hlosta, and Z. Zdrahal, "Open University Learning Analytics dataset," Scientific Data, vol. 4, Art. no. 170171, 2017, doi: 10.1038/sdata.2017.171.
+
+[24] OpenAI, "ChatGPT through Codex," AI system, accessed Nov. 1, 2026. [Online]. Available: https://openai.com/chatgpt/.

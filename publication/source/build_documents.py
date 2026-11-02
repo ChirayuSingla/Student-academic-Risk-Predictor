@@ -92,7 +92,7 @@ def remap_citations(blocks):
     for old,new in mapping.items():out.append(('reference',f'[{new}] '+REFERENCES[old-1]))
     (B/'updated_references.md').write_text('# Verified bibliography\n\n'+'\n\n'.join(b[1] for b in out if b[0]=='reference'),encoding='utf-8')
     return out
-def manuscript():
+def manuscript(output_stem='Revised_Manuscript'):
     d=Document(B/'template/Access-Template-2024.docx');font_black(d)
     front=copy.deepcopy(d.sections[0]._sectPr);body=copy.deepcopy(d.sections[1]._sectPr)
     for child in list(d._element.body):d._element.body.remove(child)
@@ -127,9 +127,9 @@ def manuscript():
             md.append('!['+block[2]+'](figures/'+block[1]+'.png)\n')
     footer(d)
     d.core_properties.title=blocks[0][1];d.core_properties.author='Chirayu Singla; Yuvraj Singh; Rajay Vedaraj I S';d.core_properties.comments=''
-    d.save(B/'Revised_Manuscript.docx')
-    (B/'Revised_Manuscript.md').write_text('\n'.join(md),encoding='utf-8')
-    (B/'source/manuscript_blocks.json').write_text(json.dumps(blocks,indent=2),encoding='utf-8')
+    d.save(B/(output_stem+'.docx'))
+    (B/(output_stem+'.md')).write_text('\n'.join(md),encoding='utf-8')
+    (B/'source'/(output_stem+'_blocks.json')).write_text(json.dumps(blocks,indent=2),encoding='utf-8')
     print('Manuscript',len(' '.join(md).split()),'words; abstract',len(next(b[1] for b in blocks if b[0]=='abstract').split()),'words')
 
 ISSUES=[

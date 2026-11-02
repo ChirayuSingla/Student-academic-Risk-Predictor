@@ -1,0 +1,78 @@
+{
+  "date": "2026-11-02",
+  "checks": {
+    "16_heldout_variants_metrics_confusions_and_12_saved_models": true,
+    "four_baselines_from_original_rows": true,
+    "140_nested_fold_records_including_baselines_and_sample_SD": true,
+    "24_subgroups_denominators_confusions_and_Wilson_intervals": true,
+    "calibration_bin_counts_probabilities_and_outcomes": true,
+    "sigmoid_ensembles_three_members_and_two_positive_flags": true,
+    "fresh_rerun_eight_protocol_fold_and_reproduction_JSON_records": true,
+    "fresh_end_to_end_rerun_scientific_csv_outputs": true,
+    "14_table_source_copies_identical": true
+  },
+  "fresh_rerun_comparison": {
+    "bootstrap_intervals.csv": {
+      "rows": 32,
+      "status": "matched"
+    },
+    "calibration_bins.csv": {
+      "rows": 16,
+      "status": "matched"
+    },
+    "coefficient_stability.csv": {
+      "rows": 390,
+      "status": "matched"
+    },
+    "gradient_boosting_search.csv": {
+      "rows": 4,
+      "status": "matched"
+    },
+    "heldout_metrics.csv": {
+      "rows": 16,
+      "status": "matched"
+    },
+    "heldout_predictions.csv": {
+      "rows": 79,
+      "status": "matched"
+    },
+    "nested_fold_metrics.csv": {
+      "rows": 140,
+      "status": "matched"
+    },
+    "nested_predictions.csv": {
+      "rows": 6320,
+      "status": "matched"
+    },
+    "nested_summary.csv": {
+      "rows": 16,
+      "status": "matched"
+    },
+    "paired_differences.csv": {
+      "rows": 4,
+      "status": "matched"
+    },
+    "permutation_stability.csv": {
+      "rows": 600,
+      "status": "matched"
+    },
+    "random_forest_search.csv": {
+      "rows": 4,
+      "status": "matched"
+    },
+    "subgroups.csv": {
+      "rows": 24,
+      "status": "matched"
+    },
+    "threshold_sensitivity.csv": {
+      "rows": 36,
+      "status": "matched"
+    }
+  },
+  "limitations": [
+    "Previously inspected holdout; extensions exploratory",
+    "No independent institution",
+    "No feature timestamps",
+    "No causal or educational effectiveness inference"
+  ]
+}

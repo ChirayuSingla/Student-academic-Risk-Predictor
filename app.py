@@ -9,7 +9,7 @@ from src.evaluation import positive_probability
 from src.explainability import logistic_local_explanation, tree_local_explanation
 from src.ui import LABELS, STEPS, context_card, field, friendly_tree_feature, header, review_table, school_code, stepper, styles
 
-st.set_page_config(page_title="StudentLens · Academic Risk Research", page_icon="📘", layout="wide")
+st.set_page_config(page_title="Retrospective Academic Risk Research", page_icon="📘", layout="wide")
 styles()
 
 

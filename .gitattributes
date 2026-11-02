@@ -1,0 +1,7 @@
+# Preserve research artifacts byte for byte and avoid text diffs for binary formats.
+*.pdf binary
+*.docx binary
+*.joblib binary
+*.png binary
+*.jpg binary
+*.zip binary

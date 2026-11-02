@@ -3,7 +3,7 @@ Run from the project root: .venv/Scripts/python.exe publication/source/run_exper
 Never writes the original models/results. No test-based model/threshold selection.
 """
 from pathlib import Path
-import sys, json, platform, hashlib, shutil, time
+import sys, json, platform, hashlib, shutil, time, os
 from importlib.metadata import version
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
@@ -24,7 +24,8 @@ from src.training import model_specs, SCORING, refit_index, tune_models
 from src.evaluation import evaluate_predictions, positive_probability, wilson_interval
 from src.preprocessing import make_preprocessor
 
-OUT = ROOT/'publication'
+OUT = Path(os.environ.get('RISK_PUBLICATION_OUTPUT', ROOT/'publication')).resolve()
+OUT.mkdir(parents=True, exist_ok=True)
 RES = OUT/'results'
 RES.mkdir(exist_ok=True)
 def js(path, value):

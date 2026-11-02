@@ -1,0 +1,32 @@
+{
+  "cff-version": "1.2.0",
+  "message": "Please cite this repository and the UCI dataset separately. Proposed v1.0.0 is not yet released.",
+  "title": "Retrospective Student Academic Risk Classification Using Interpretable Machine Learning",
+  "type": "software",
+  "url": "https://github.com/ChirayuSingla/Student-academic-Risk-Predictor",
+  "repository-code": "https://github.com/ChirayuSingla/Student-academic-Risk-Predictor",
+  "authors": [
+    {
+      "given-names": "Chirayu",
+      "family-names": "Singla",
+      "affiliation": "Department of Computer Science and Engineering, Vellore Institute of Technology, Vellore, Tamil Nadu, India"
+    },
+    {
+      "given-names": "Yuvraj",
+      "family-names": "Singh",
+      "affiliation": "Department of Computer Science and Engineering, Vellore Institute of Technology, Vellore, Tamil Nadu, India"
+    },
+    {
+      "given-names": "Rajay",
+      "family-names": "Vedaraj I S",
+      "affiliation": "Department of Computer Science and Engineering, Vellore Institute of Technology, Vellore, Tamil Nadu, India"
+    }
+  ],
+  "keywords": [
+    "academic risk",
+    "retrospective classification",
+    "interpretable machine learning",
+    "reproducibility"
+  ],
+  "abstract": "Retrospective UCI mathematics classification with preserved original LR/DT models and exploratory sensitivity analyses. No prospective or independent institutional validation."
+}

@@ -1,0 +1,26 @@
+{
+  "date": "2026-11-02",
+  "tests": {
+    "passed": 27,
+    "expected_historical_source_warning": true
+  },
+  "pip_check": "passed",
+  "environment_checks": {
+    "passed": 170,
+    "total": 170
+  },
+  "original_verification_groups": 11,
+  "publication_saved_output_groups": 7,
+  "full_rerun_seconds": 761.8,
+  "fresh_scientific_csv_comparisons": 14,
+  "fresh_scientific_json_comparisons": 8,
+  "streamlit_startup": "passed: health and app HTTP 200",
+  "citation_schema": "CFF 1.2.0 passed",
+  "document_parity": "passed",
+  "visual_review": "All 10 manuscript pages and supporting PDF layouts inspected; no overlap or clipping observed",
+  "official_template_download": "byte-identical",
+  "original_data_models_and_training_snapshots": "28 files unchanged",
+  "public_release": "not created",
+  "zenodo_deposit": "not created",
+  "journal_submission": "not made"
+}

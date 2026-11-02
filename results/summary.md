@@ -1,6 +1,6 @@
 # Experiment summary
 
-**Early Detection of Student Academic Risk Using Machine Learning**
+**Retrospective Student Academic Risk Classification Using Interpretable Machine Learning**
 
 **Data:** Original UCI mathematics CSV, 395 real students, 33 original columns;
 At Risk = G3 < 10 (130 students), Not At Risk = G3 >= 10 (265 students).

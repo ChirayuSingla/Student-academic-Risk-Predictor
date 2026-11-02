@@ -1,5 +1,9 @@
 # Research paper revision package
 
+Current preparation dated 2 November 2026: start with `Final_IEEE_Access_Manuscript.pdf` and its editable DOCX. Final technical, reproducibility, submission-checklist and results-appendix PDFs accompany it. `final/` records the completed fresh experiment comparison, citation-schema validation, reference metadata and document parity. See the repository README, `Repository_Release_Notes.md` and `ZENODO_PREPARATION.md` for current execution and release instructions. Author biographies, declarations, institutional determination and licence approval remain pending.
+
+The following description and `Revised_Manuscript.*` are the preserved 1 November revision. `SHA256SUMS.json` is its historical package manifest; source revisions after the initial Git commit are authenticated by Git history and `final/FINAL_SHA256SUMS.json`. It is not a checksum manifest for the current edited source. Original fitted models, data and training snapshots remain unchanged.
+
 Prepared 1 November 2026. Start with Revised_Manuscript.pdf or the editable DOCX. The manuscript uses the official IEEE Access template and confines conclusions to retrospective classification.
 
 Supporting_Reports contains the 34-issue technical audit, experiment report, reproduction instructions and readiness checklist. Individual Markdown versions allow direct review. Reference_Verification.md records the original and new bibliography checks and retrieval limitations.

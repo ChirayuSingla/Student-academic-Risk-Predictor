@@ -1,0 +1,21 @@
+{
+  "title": "Retrospective Student Academic Risk Classification Using Interpretable Machine Learning",
+  "upload_type": "software",
+  "description": "Retrospective UCI mathematics classification with preserved original LR/DT models and exploratory sensitivity analyses. No prospective or independent institutional validation.",
+  "creators": [
+    {
+      "name": "Chirayu Singla",
+      "affiliation": "Department of Computer Science and Engineering, Vellore Institute of Technology, Vellore, Tamil Nadu, India"
+    },
+    {
+      "name": "Yuvraj Singh",
+      "affiliation": "Department of Computer Science and Engineering, Vellore Institute of Technology, Vellore, Tamil Nadu, India"
+    },
+    {
+      "name": "Rajay Vedaraj I S",
+      "affiliation": "Department of Computer Science and Engineering, Vellore Institute of Technology, Vellore, Tamil Nadu, India"
+    }
+  ],
+  "version": "1.0.0",
+  "notes": "Draft metadata only. Licence and author identity details require confirmation; no DOI assigned."
+}

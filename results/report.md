@@ -1,4 +1,4 @@
-# Early Detection of Student Academic Risk Using Machine Learning
+# Retrospective Student Academic Risk Classification Using Interpretable Machine Learning
 
 This report is generated from an executed experiment, not manually entered scores.
 Run timestamp (UTC): 2026-10-11T11:08:12.131674+00:00. Run ID: `daf3b3a9-f0eb-4190-b811-7364bf8d80f7`.
@@ -123,7 +123,7 @@ function. That reference profile is a mathematical average, not an actual studen
 
 - Excluding G1/G2/G3 prevents direct grade leakage. UCI does not provide per-feature timestamps:
   total `absences` and potentially other attributes may span the school year. This is a retrospective,
-  grade-free early-warning **prototype**, not verified beginning-of-term prediction. Prospectively
+  retrospective grade-free classification **prototype**, not verified beginning-of-term prediction. Prospectively
   validate inputs frozen at a defined cutoff (or exclude unavailable fields) before operational use.
 - One small, historical, two-school mathematics cohort cannot establish generalization to other
   schools, countries, subjects, or present-day populations. Random splitting is not temporal or

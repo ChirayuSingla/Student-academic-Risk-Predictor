@@ -1,0 +1,41 @@
+{
+  "status": "passed",
+  "manuscript": {
+    "pages": 10,
+    "tables": 7,
+    "figures": 7,
+    "native_equations": 4,
+    "references": 24,
+    "source_pdf_text_and_cells_match": true,
+    "official_template_geometry_preserved": true
+  },
+  "supporting_reports": {
+    "Final_Technical_Audit": {
+      "pages": 6,
+      "bytes": 13451
+    },
+    "Final_Reproducibility_Report": {
+      "pages": 1,
+      "bytes": 4280
+    },
+    "IEEE_Access_Submission_Checklist": {
+      "pages": 2,
+      "bytes": 4670
+    },
+    "Experiment_Results_Appendix": {
+      "pages": 6,
+      "bytes": 12616
+    }
+  },
+  "historical_data_model_and_snapshot_files_unchanged": 28,
+  "rendering": "Packaged render_docx.py unavailable because LibreOffice is absent. Microsoft Word export succeeded; PDFium rendered page PNGs in publication/review for visual review.",
+  "required_author_actions": [
+    "all-author biographies",
+    "funding and conflicts",
+    "institutional ethics determination",
+    "ORCID and corresponding-author confirmation",
+    "licence approval",
+    "final review and consent"
+  ],
+  "latex": "No original LaTeX manuscript source available; no .tex fabricated."
+}

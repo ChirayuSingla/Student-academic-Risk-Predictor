@@ -1,289 +1,91 @@
-# Early Detection of Student Academic Risk Using Machine Learning
+# Retrospective Student Academic Risk Classification Using Interpretable Machine Learning
 
-An executed, reproducible research project using the **real UCI mathematics dataset**.
-At Risk = `G3 < 10` (label 1); Not At Risk = `G3 >= 10` (label 0).
-**G1, G2 and G3 never enter the primary model or application form.** No synthetic data or SMOTE is used.
+Research manuscript and reproducible Python project by **Chirayu Singla, Yuvraj Singh, and Rajay Vedaraj I S**. Department of Computer Science and Engineering, Vellore Institute of Technology, Vellore, Tamil Nadu, India.
 
-## Quick start
+## Research overview and objectives
 
-Use **Python 3.12.10, Windows x64**. Open PowerShell in this directory (the one
-containing this README and `app.py`), then run:
+This study classifies final mathematics failure in the public UCI cohort while excluding all three grade columns from model inputs. It audits the preserved logistic-regression (LR) and decision-tree (DT) experiment and explores whether its conclusions hold under simple baselines, nested resampling, model diversity, feature exclusions, calibration diagnostics and subgroup analysis. Its contribution is a reproducible sensitivity assessment of a small retrospective classification task.
 
-```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\setup.ps1 -Recreate
-.\.venv\Scripts\python.exe -m pip check
-.\.venv\Scripts\python.exe -m src.doctor
-.\.venv\Scripts\python.exe -m src.verify
-.\.venv\Scripts\python.exe -m pytest -q
-.\.venv\Scripts\python.exe scripts\smoke_streamlit.py
-.\.venv\Scripts\python.exe -m streamlit run app.py
-```
+The problem is `At Risk = 1[G3 < 10]`. The objective is to describe discrimination, probability error, referral workload and uncertainty without implying that recorded predictors were available at a useful early cutoff. No independent institution, prospective cohort or intervention study is evaluated.
 
-Open the local URL printed by Streamlit (normally `http://localhost:8501`). Stop it
-with Ctrl+C. The supplied data and trained models are sufficient; launching never
-requires retraining, data downloads, Jupyter, environment activation, or administrator access.
+## Data and licence
 
-`-Recreate` backs up an existing environment to `.venv-backup-<timestamp>` before
-creating a fresh one. Close running Python/Streamlit processes first. Omit the flag
-when creating an environment for the first time. `ExecutionPolicy Bypass` applies
-only to this script process; it does not change your machine's execution policy.
+Paulo Cortez (2008), [Student Performance](https://archive.ics.uci.edu/dataset/320/student+performance), DOI [10.24432/C5TG7T](https://doi.org/10.24432/C5TG7T), under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Mathematics: 395 rows, 33 original columns, 30 non-grade predictors, 130 failures and 265 passes, no missing values. The frozen split contains 316 training and 79 test rows (26 failures, 53 passes). Portuguese data are supplied as source material and are not pooled or used for external validation. Original data bytes and attribution are preserved in `data/` and `data/provenance.json`.
 
-The script looks for your per-user Python 3.12 installation, the local validation
-runtime if present, then `py -3.12`. If Python is installed elsewhere, supply its
-actual executable explicitly:
+The repository previously had no project-wide licence. [LICENSE](LICENSE) records that fact and the scope of third-party permissions; it grants no new rights over author-owned code or manuscript. An open-source licence needs rights-holder approval before release.
 
-```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\setup.ps1 -Recreate -PythonExe "$env:LOCALAPPDATA\Programs\Python\Python312\python.exe"
-```
+## Methodology and model descriptions
 
-The repair session also downloaded the official Python 3.12.10 x64 NuGet runtime
-to `.runtime/python31210/tools/`, allowing validation without a global installation.
-The current `.venv` depends on this directory: **keep it in place**. A future setup
-can use your installed Python instead. Environments must be recreated after moving
-the project or removing their base Python; never copy an existing `.venv` between machines.
+Training-only pipelines impute numeric values by median and categories by mode, encode categories with first-level dropping, and scale numeric LR inputs. LR searches 16 configurations, DT 60, using stratified five-fold cross-validation, F2 selection with recall and ROC-AUC tie breaks, and optional balanced class weights. No SMOTE or synthetic records are used. The threshold stays 0.5. DT remains the application default selected using training CV. LR supplies grouped log-odds contributions; DT supplies the exact decision path and leaf support.
 
-### Manual setup and dependency policy
+Random forest and gradient boosting each use a bounded four-configuration exploratory search. Repeated nested validation uses five outer folds repeated twice on only the original 316 training rows, with full five-fold inner retuning. Fold scores are dependent and are summarized by mean and sample SD, not independent confidence intervals.
 
-For a manual clean installation, choose a **new** environment directory, explicitly
-select Python 3.12 x64, and use its own interpreter for every subsequent command:
+## Verified results and baseline comparison
 
-```powershell
-& "$env:LOCALAPPDATA\Programs\Python\Python312\python.exe" -m venv .venv-clean
-.\.venv-clean\Scripts\python.exe -m pip install --only-binary=:all: -r requirements.txt
-.\.venv-clean\Scripts\python.exe -m pip check
-.\.venv-clean\Scripts\python.exe -m src.doctor
-.\.venv-clean\Scripts\python.exe -m streamlit run app.py
-```
+The following values are recalculated from saved probabilities and checked against fitted models. LR/DT are the original held-out experiment. RF/GB and all revision analyses are exploratory because the same test cohort was already examined.
 
-`requirements.txt` pins the eight direct dependencies and constrains their dependency
-graph with `requirements-lock.txt`. The lock pins all 52 runtime/test packages.
-Installing either file produces the same locked project dependency versions on
-Python 3.12 Windows x64. `--only-binary=:all:` rejects incompatible/missing wheels
-instead of attempting local C/C++ builds. Training writes its package snapshot to
-`results/environment-freeze.txt`; it never overwrites the dependency lock.
+| Model | Precision | Recall | F2 | ROC-AUC | AP | Brier |
+|---|---|---|---|---|---|---|
+| Logistic regression | 0.500 | 0.692 | 0.643 | 0.744 | 0.598 | 0.207 |
+| Decision tree | 0.450 | 0.692 | 0.625 | 0.693 | 0.569 | 0.216 |
+| Random forest | 0.583 | 0.538 | 0.547 | 0.723 | 0.676 | 0.209 |
+| Gradient boosting | 0.647 | 0.423 | 0.455 | 0.721 | 0.564 | 0.197 |
+| Majority | 0.000 | 0.000 | 0.000 | 0.500 | 0.329 | 0.329 |
+| Always-At-Risk | 0.329 | 1.000 | 0.710 | 0.500 | 0.329 | 0.671 |
+| Prevalence probability | 0.000 | 0.000 | 0.000 | 0.500 | 0.329 | 0.221 |
+| Prior failure | 0.647 | 0.423 | 0.455 | 0.655 | 0.464 | 0.266 |
 
-| Direct package | Preserved version |
-|---|---:|
-| NumPy | 2.2.6 |
-| pandas | 2.3.3 |
-| SciPy | 1.16.2 |
-| scikit-learn | 1.7.2 |
-| Matplotlib | 3.10.7 |
-| joblib | 1.5.2 |
-| Streamlit | 1.50.0 |
-| pytest | 8.4.2 |
+LR confusion matrix is [[35,18],[8,18]], DT [[31,22],[8,18]], in observed/predicted pass-fail order. Both identify 18/26 failures, with recall 0.692 and Wilson interval 0.500–0.835. LR flags 36/79 and DT 40/79 students. Always-At-Risk flags 79/79 and exceeds both on F2; the selective models improve precision and reduce workload. Majority matches LR accuracy while detecting no failures. AP denotes non-interpolated average precision. Smaller Brier scores are better.
 
-These match the recorded training environment. Model loading checks the numerical
-stack versions before deserialization. A scikit-learn upgrade requires deliberate
-retraining and validation; do not silently load old models under a different version.
-Python 3.10 is unsupported by this lock: SciPy requires at least 3.11 and contourpy
-at least 3.12. Patch-level Python 3.12 differences are allowed; the repair targets
-3.12.10, while the original model metadata correctly retains historical Python 3.12.14.
-The Windows lock is tested on Windows; macOS/Linux wheel availability was not tested.
+## Calibration, subgroup analysis and ablations
 
-### Diagnosing the original import failure
+Nested-search sigmoid ensembles use three training calibration folds. Their held-out recall falls to 2/26 = 0.077 at 0.5, despite Brier improving to 0.197 (LR) and 0.202 (DT), versus prevalence 0.221. These models are diagnostic extensions and are not substituted into the app.
 
-The supplied `.venv/pyvenv.cfg` selected **Python 3.10.11**, while NumPy and SciPy
-contained **`cp312-cp312-win_amd64`** wheels. NumPy's native extension was named
-`_multiarray_umath.cp312-win_amd64.pyd`; Python 3.10 could not import it. The inner
-exception was `ModuleNotFoundError: numpy._core._multiarray_umath`, wrapped by
-NumPy's misleading "you should not try to import numpy from its source directory"
-message, then surfaced when pandas imported NumPy. No local NumPy/pandas/SciPy/
-Streamlit shadowing module was found in the active application paths.
+Recorded sex, address and school slices retain positive and negative denominators and Wilson intervals. For LR, recorded-F false positives are 14/26 and recorded-M 4/27; DT gives 9/26 and 13/27. Recall uses 12/17 and 6/9 positives. These small, overlapping groups cannot establish fairness or transportable disparities.
 
-Recreating the environment with the correct interpreter fixes this binary mismatch.
-Reinstalling only pandas, installing into global Python, or downgrading NumPy does
-not address the underlying mixed environment. Inspect the actual interpreter and
-package origins with:
+Ablations retune LR/DT without absences, without failures, and using a defined reduced set of 15 inputs on identical outer folds. Outer-validation AP permutation importance and coefficient stability describe fitted associations. Results and figures are in [publication/results](publication/results) and [publication/figures](publication/figures). Class-stratified paired bootstrap intervals condition on this cohort, fixed models and observed prevalence; they omit retraining and school clustering.
 
-```powershell
-.\.venv\Scripts\python.exe -c "import sys; print(sys.executable); print(sys.version)"
-.\.venv\Scripts\python.exe -m src.doctor --json
-```
+## Research prototype
 
-`src.doctor` checks Python version/architecture, virtual-environment isolation,
-PYTHONHOME/PYTHONPATH overrides, local shadowing names, **every** locked version and
-its Python requirement/wheel tags, imports and module origins, and both saved models.
-It exits nonzero on failure. If path overrides exist, clear them in this terminal
-with `Remove-Item Env:PYTHONHOME, Env:PYTHONPATH -ErrorAction SilentlyContinue` before setup.
-For persistent DLL failures after a clean rebuild, retain the full inner traceback
-and diagnostic output; do not diagnose from the outer pandas error alone.
+The Streamlit application guides profile entry, runs the original models and displays explanations and held-out evaluation. Inputs remain in session memory. Use fictional profiles when demonstrating; personal names are unnecessary for model inference. App tests demonstrate software behavior, not educational effectiveness.
 
-In VS Code select `.venv\Scripts\python.exe` using **Python: Select Interpreter**.
-The included workspace settings provide this default; an already-selected interpreter
-may still need to be changed manually. `python`, `pip`, and `streamlit` on PATH can
-still refer to Python 3.10, so use the explicit virtual-environment commands above.
-
-### Optional data acquisition and training
-
-```powershell
-# Optional: extract the supplied archive and compare it with UCI (network required).
-.\.venv\Scripts\python.exe -m src.acquire_data --archive "student+performance.zip" --verify-official
-# Optional: reproduce training into a separate directory, preserving supplied results.
-.\.venv\Scripts\python.exe -m src.run_pipeline --output-dir .diagnostics\pipeline-replay
-# Deliberately replace the active models/results only when you want a new experiment:
-# .\.venv\Scripts\python.exe -m src.run_pipeline
-```
-
-Omit `--verify-official` for offline extraction. The already-extracted `data/` is
-sufficient for all experiments. A partial archive now fails before writing dataset files.
-The full replay uses the same architecture, 380 CV fits, seeds, features, selection
-objective, and threshold. `--output-dir` changes only where artifacts are saved.
-
-### Project copies and provenance
-
-The active project is this directory. `student-academic-risk-project/` and
-`student-academic-risk-project.zip` are preserved original distribution copies;
-they have not been synchronized with these repairs. Do not launch from that nested
-directory. `pytest.ini` limits discovery to this root's `tests/` to avoid duplicate
-module names and accidentally testing the distribution copy.
-
-The original models, metadata, data, metric tables, plots and research reports are
-preserved. `models/training-source/` contains the exact original source bytes whose
-hashes were recorded in the model metadata. The verifier authenticates that snapshot,
-reports current source changes explicitly, and recomputes predictions, metrics,
-preprocessing statistics, splits and explanations using the repaired code. It does
-not rewrite historical metadata to pretend the old models used the new source.
-`--strict-source` additionally requires the current sources to match the historical
-training run; it is expected to fail for the supplied models after these repairs.
-
-See [results/repair-report.md](results/repair-report.md) for the repair inventory and
-executed checks. `results/repair-tests.xml` records the new test run; the historical
-`results/tests.xml` and UI review remain available.
-
-## Files
-
-```text
-data/                  original CSVs, UCI documentation and SHA-256 provenance
-notebooks/             optional exploration of the real data and saved results
-src/
-  acquire_data.py       safe extraction, optional official byte comparison
-  artifacts.py          authenticated model loading and cache signatures
-  config.py            fixed feature domains, labels and experiment constants
-  data.py              schema validation, target and stratified split
-  doctor.py            interpreter, dependency, native-wheel and prediction diagnostics
-  preprocessing.py     ColumnTransformer and fold-local transformers
-  training.py          imbalance inspection, five-fold tuning and selection
-  evaluation.py        both-class metrics, confusion matrices, ROC and PR curves
-  eda.py               class distribution and training-only exploratory plots
-  explainability.py    coefficients, importance, tree and exact local explanations
-  reporting.py         report generated from executed artifacts
-  run_pipeline.py      complete reproducible workflow
-  verify.py            saved-model, split, preprocessing and metrics audit
-  ui.py                guided form, plain-language labels and responsive styling
-models/                two joblib pipelines and metadata
-models/training-source/ authenticated original sources from the supplied training run
-results/figures/       11 PNG plots plus full tree SVG
-results/               metrics, CV grids, predictions, explanations, audit and report
-tests/                 scientific integrity and Streamlit integration checks
-app.py                 Streamlit student-input research prototype
-requirements.txt       pinned direct dependencies
-requirements-lock.txt  exact installed package versions
-scripts/setup.ps1      fresh Windows environment setup with optional backup
-pytest.ini             test discovery restricted to the active project
-```
-
-Start with **[results/summary.md](results/summary.md)** for the concise research report;
-the detailed methodology and results are in **[results/report.md](results/report.md)**.
-All scores are calculated by actual model execution. `results/metrics.json` includes accuracy,
-At Risk precision/recall/F1/F2, ROC-AUC, average precision, Brier score, specificity, both-class
-classification reports, confusion matrices and a recall uncertainty interval.
-`metrics_summary.csv` and held-out prediction CSVs allow independent inspection.
-
-## Methodology
-
-- The original `student-mat.csv` has 395 students, 33 columns and no missing values.
-  `student-por.csv` is retained but **not used** in this experiment.
-- Stratified 80/20 train-test split with `random_state=42`; 316 train / 79 test.
-- Five-fold stratified training-only CV, shuffled with `random_state=42`.
-  One complete scikit-learn pipeline is passed to each GridSearchCV.
-  Imputation, category discovery and scaling are fitted inside each training fold.
-- Categorical features: mode imputation, one-hot encoding with one omitted reference level.
-  Numeric/ordinal features: median imputation; standardization for Logistic Regression only.
-- Logistic Regression and Decision Tree compare `class_weight=None` and `'balanced'` in CV
-  after inspecting training class imbalance. No synthetic oversampling is needed or used.
-- Choose hyperparameters and the default model by highest mean **F2**, with ties decided by
-  recall then ROC-AUC. F2 favors recall while penalizing false-positive overload.
-  A fixed 0.5 classification threshold is declared before evaluation; the test data never
-  determine preprocessing, hyperparameters, model choice or the threshold.
-- Both final pipelines fit the full **training partition only**. The saved pipelines remain
-  those evaluated on test; test rows are not used to refit a deployment model.
-  Actual majority and always-At-Risk baselines contextualize the results.
-- Seeds, source/dataset/model hashes, package versions, row IDs, CV folds, complete search
-  tables, coefficients, reference categories, tree rules and plots are saved.
-
-## Selected and excluded features
-
-All 30 non-grade columns are included a priori:
-
-| Group | Features |
-|---|---|
-| Demographic/school | school, sex, age, address, reason, guardian, traveltime |
-| Family/home | famsize, Pstatus, Medu, Fedu, Mjob, Fjob, famsup, nursery, internet, famrel |
-| Study/support/absence | studytime, failures, schoolsup, paid, activities, higher, absences |
-| Lifestyle/wellbeing | romantic, freetime, goout, Dalc, Walc, health |
-
-`G3` is excluded because it defines the outcome; `G1` and `G2` are excluded to withhold
-current-course grade signals. `failures` refers to past class failures. The original codes
-are preserved: the CSV observes 0–3, while the UCI documentation mentions code 4.
-Numeric and categorical column lists are explicit in `src/config.py`; ordinal codes are
-treated numerically, a modeling assumption documented in the report.
-
-## Streamlit application
-
-Complete four short steps using UCI meanings, review the profile, and submit. Model selection
-is available under Model settings. Type the student's name, school and numeric details, including
-age, absences and the ratings described beside each field. School accepts Gabriel Pereira / GP
-or Mousinho da Silveira / MS, ignoring case and extra spaces, and validates the entry against
-the two schools supported by the trained models. Other categorical questions use visible
-radio choices; the form has no searchable dropdown controls. The required student name is
-shown on the review and result pages, kept only in session memory, and excluded from model
-inputs. Editing preserves it; starting a new assessment clears it.
-Every student input starts blank and is required, preventing
-training medians or modes from being mistaken for a real student's information. Back and
-Continue save entries within the browser session. The app
-shows predicted category, estimated probability, and an exact model explanation:
-
-- Logistic Regression: grouped log-odds contributions relative to the mean transformed
-  training profile. The reference plus contributions reconstructs the model's log-odds.
-- Decision Tree: the exact split path and number of training rows at the reached leaf.
-
-The UI includes category descriptions, input checks, training-support warnings, evaluation
-results and citations. The result page offers editing and a fresh assessment. Changing model
-settings does not relabel an existing estimate; changes apply to the next submission.
-Submitted information is used in memory; this app does not persist student records.
-Joblib artifacts must come from a trusted source; this app checks the recorded model hashes.
+![Research prototype screenshot](results/ui-preview.jpg)
 
 ## Limitations
 
-**Research prototype, never the sole basis for academic decisions.** These are associations,
-not causal explanations or evidence that changing a variable improves performance.
-Probabilities are uncalibrated estimates; weighting can alter their interpretation.
+The cohort is small and historical, with two schools, only 26 failing test students and unknown predictor timing. Total absences may include late-year information. Excluding grades or absences cannot establish prospective availability. No external validation, causal effect, operational fairness guarantee or student-outcome benefit is claimed. Future work requires timestamped prospective features, a predeclared cutoff, independent cohorts, contextual ethics review and evaluation of support outcomes.
 
-UCI does not supply per-feature timestamps; `absences` is a recorded total and could contain
-late-year information. Grade exclusion removes direct grade leakage but cannot establish
-that every feature was available at an early cutoff. This is a retrospective grade-free
-prototype. Before operational use, freeze all inputs at a defined early cutoff, validate
-prospectively and externally, assess subgroup fairness and review sensitive variables.
-The small historical cohort does not establish applicability to other student populations.
+## Reproduce on Windows Python 3.12.10
 
-## Research context and citations
+From the repository root, create a fresh environment with `powershell -NoProfile -ExecutionPolicy Bypass -File scripts/setup.ps1`. The setup script requires an installed Python 3.12 x64; an excluded local runtime is not needed by a fresh clone. Dependencies and the 52-package lock preserve the model environment. Do not copy an existing virtual environment between machines.
 
-Dataset: **Cortez, P. (2008). Student Performance [Dataset]. UCI Machine Learning Repository.**
-[DOI: 10.24432/C5TG7T](https://doi.org/10.24432/C5TG7T).
-[UCI source and definitions](https://archive.ics.uci.edu/dataset/320/student+performance).
-Data license: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
-`data/provenance.json` records the original archive and extracted-file hashes and whether
-the contents were verified byte-for-byte against the official UCI download.
+Run `.venv/Scripts/python.exe -m pip check`, `.venv/Scripts/python.exe -m src.doctor`, `.venv/Scripts/python.exe -m src.verify`, and `.venv/Scripts/python.exe -m pytest -q --basetemp .diagnostics/pytest-fresh`. Then run `.venv/Scripts/python.exe scripts/smoke_streamlit.py` and `.venv/Scripts/python.exe -m streamlit run app.py`.
 
-Conceptual paper: **Ewais, A., Arram, A., Diab, S., et al. (2026). Using machine learning
-for early identification of At-risk students. Scientific Reports, 16, 19944.**
-[DOI: 10.1038/s41598-026-48426-1](https://doi.org/10.1038/s41598-026-48426-1).
-The publisher identifies the first author as Ahmed Ewais. Its institutional dataset is
-available by reasonable request, not a public download. **It is not used here.**
-This project differs by using public UCI data and binary Logistic Regression/Decision Tree
-classification; the paper's regression scores should not be compared directly to these results.
+To reproduce every publication extension without replacing saved evidence, set `$env:RISK_PUBLICATION_OUTPUT = Join-Path (Get-Location) '.diagnostics/publication-reproduction-20261102'` in PowerShell and run `.venv/Scripts/python.exe publication/source/run_experiments.py`. This executes original tuning, four model families, ten outer folds, retuned ablations, calibration ensembles and 2,000 paired stratified bootstrap samples; allow several minutes. Then run `.venv/Scripts/python.exe publication/source/audit_final.py`. Its fresh-run comparison covers scientific CSV columns and excludes nondeterministic search timings.
 
-The optional notebook reads actual source data and executed outputs; it ships with cleared
-outputs and is not required by the pipeline. To use it, install Jupyter separately and open
-`notebooks/01_explore_results.ipynb`. The verified execution is the modular CLI pipeline.
+Saved-output verification alone: `.venv/Scripts/python.exe publication/source/verify_outputs.py` and `.venv/Scripts/python.exe publication/source/audit_final.py`. Read the JSON result: a fresh-rerun check is only present after that rerun completes. Source changes produce an expected historical-snapshot warning; preserve `models/training-source`.
+
+The experiment dependencies are in `publication/reproducibility/requirements-experiments.txt`; the root lock also supports the app and tests. To regenerate the seven figures, run `.venv/Scripts/python.exe publication/source/make_figures.py` only in a disposable clone because it replaces the derived figure exports. To author the final package, use a separate document environment with `python-docx`, `reportlab`, `pypdf`, Pillow and a PDF renderer, run `publication/source/prepare_final.py`, then `publication/source/export_word.ps1 -Files publication/Final_IEEE_Access_Manuscript.docx`. Microsoft Word exports the matching PDF. Authoring is separate from model execution.
+
+## Repository structure and evidence
+
+- `src/`, `app.py`, `scripts/`, `tests/`: runnable original experiment, app and checks.
+- `data/`, `models/`, `results/`: preserved dataset, original fitted models and evidence.
+- `models/training-source/`: authenticated historical source snapshots.
+- `publication/source/`: exploratory experiments, independent audit and final authoring source.
+- `publication/results/`, `publication/tables/`, `publication/figures/`: full scientific evidence and manuscript assets.
+- `publication/reproducibility/`: portable historical project snapshot and separate dependency lists; historical copies are intentional.
+- `publication/final/`: new verification, reference and layout records.
+- `notebooks/`: optional cleared exploration notebook; Jupyter is not needed to run the app.
+
+## Manuscript, reports and publication status
+
+Prepared for IEEE Access; **not submitted, accepted or published**. [Final manuscript PDF](publication/Final_IEEE_Access_Manuscript.pdf) · [editable DOCX](publication/Final_IEEE_Access_Manuscript.docx) · [Technical audit](publication/Final_Technical_Audit.pdf) · [Reproducibility report](publication/Final_Reproducibility_Report.pdf) · [Submission checklist](publication/IEEE_Access_Submission_Checklist.pdf) · [Results appendix](publication/Experiment_Results_Appendix.pdf) · [Release notes](Repository_Release_Notes.md).
+
+Biographies, author declarations, ORCID details, correspondence confirmation and a code-licence decision remain author actions. The proposed v1.0.0 release is prepared locally; publication and Zenodo archival require approval. No project DOI has been assigned. Historical documents remain as provenance; use the `Final_` files for this revision.
+
+## Citation and authors
+
+Use [CITATION.cff](CITATION.cff) for the repository and cite the dataset separately. Suggested repository citation: Chirayu Singla, Yuvraj Singh, and Rajay Vedaraj I S, “Retrospective Student Academic Risk Classification Using Interpretable Machine Learning,” research software and manuscript preparation, https://github.com/ChirayuSingla/Student-academic-Risk-Predictor, accessed 2 November 2026. The intended release version is v1.0.0, currently unreleased; do not cite an invented journal volume or DOI.
+
+Correspondence in the supplied manuscript: Rajay Vedaraj I S, rajay@vit.ac.in (author confirmation required). No author biography or institutional approval is inferred from affiliation.
