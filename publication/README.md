@@ -1,6 +1,12 @@
 # Research paper revision package
 
-Current preparation dated 2 November 2026: start with `Final_IEEE_Access_Manuscript.pdf` and its editable DOCX. Final technical, reproducibility, submission-checklist and results-appendix PDFs accompany it. `final/` records the completed fresh experiment comparison, citation-schema validation, reference metadata and document parity. See the repository README, `Repository_Release_Notes.md` and `ZENODO_PREPARATION.md` for current execution and release instructions. Author biographies, declarations, institutional determination and licence approval remain pending.
+## Current manuscript status
+
+**Submitted**, as confirmed by Chirayu Singla on 4 November 2026. Acceptance and publication have not been confirmed. Submission venue, date and identifier are not recorded here. The IEEE Access filenames refer to the prepared document format. No published-paper DOI is claimed.
+
+## Dated preparation records
+
+Current preparation dated 2 November 2026: start with `Final_IEEE_Access_Manuscript.pdf` and its editable DOCX. Final technical, reproducibility, submission-checklist and results-appendix PDFs accompany it. `final/` records the completed fresh experiment comparison, citation-schema validation, reference metadata and document parity. See the repository README, `Repository_Release_Notes.md` and `ZENODO_PREPARATION.md` for current execution and release instructions. That preparation record listed author biographies, declarations, institutional determination and licence approval as pending; their completion since submission has not been reverified.
 
 The following description and `Revised_Manuscript.*` are the preserved 1 November revision. `SHA256SUMS.json` is its historical package manifest; source revisions after the initial Git commit are authenticated by Git history and `final/FINAL_SHA256SUMS.json`. It is not a checksum manifest for the current edited source. Original fitted models, data and training snapshots remain unchanged.
 
@@ -14,4 +20,4 @@ Reproducibility/project is a portable copy of the relevant original project and 
 
 The original experiment reproduced; 27 project tests passed and seven independent output checks passed. Calibration, ablation, subgroup and extra-model results are exploratory because the original test results were known. All tests of the original application are separate from evidence of educational effectiveness.
 
-Submission is still pending: author biographies, funding/conflict and institutional ethics declarations, final author review, a versioned public code archive, ORCID/consent checks, and an assessment of venue fit. No approval, funding, lack of conflicts, or prospective validation has been invented. No submission has been made.
+Historical checklist from the 1 November preparation: author biographies, funding/conflict and institutional ethics declarations, final author review, a versioned public code archive, ORCID/consent checks, and an assessment of venue fit. Submission was pending at that time; the current submitted status above supersedes that historical status. The completion of individual checklist items has not been reverified. No approval, funding, lack of conflicts, or prospective validation is inferred.
